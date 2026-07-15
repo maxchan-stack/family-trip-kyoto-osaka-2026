@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>可摺疊口袋地圖 · 京都大阪親子行程</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #2a2218;
+      --ink-soft: #5c4a38;
+      --paper: #f6ebda;
+      --paper2: #efe0c8;
+      --vermilion: #c23b22;
+      --gold: #b8922a;
+      --sage: #5f7550;
+      --water: #3f6173;
+      --line: rgba(42,34,24,0.22);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Klee One", "Shippori Mincho", serif;
+      color: var(--ink);
+      background: #b9a17f;
+      line-height: 1.4;
+    }
+    .screen-only {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem 0.5rem;
+      color: #2a2218;
+    }
+    .screen-only h1 {
+      font-family: "Shippori Mincho", serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.4rem;
+    }
+    .screen-only p { font-size: 0.92rem; opacity: 0.9; margin-bottom: 0.5rem; }
+    .screen-only ol { margin: 0.4rem 0 0.8rem 1.2rem; font-size: 0.88rem; }
+    .screen-only .btns { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0 1rem; }
+    .screen-only a, .screen-only button {
+      appearance: none;
+      border: none;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .screen-only a.secondary, .screen-only button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+
+    /* ===== Sheet: A3 landscape equivalent, 2×3 panels ===== */
+    .sheet {
+      width: 420mm;
+      max-width: 100%;
+      margin: 0 auto 2rem;
+      background: var(--paper);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      aspect-ratio: 420 / 297;
+      border: 1px solid rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .panel {
+      position: relative;
+      padding: 10px 12px;
+      border-right: 1px dashed var(--line);
+      border-bottom: 1px dashed var(--line);
+      overflow: hidden;
+      background: var(--paper);
+    }
+    .panel:nth-child(3n) { border-right: none; }
+    .panel:nth-child(n+4) { border-bottom: none; }
+
+    /* Fold marks (screen) */
+    .sheet::before {
+      content: "← 對摺線 →";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-family: "Caveat", cursive;
+      font-size: 14px;
+      color: rgba(194,59,34,0.35);
+      pointer-events: none;
+      z-index: 5;
+      white-space: nowrap;
+    }
+
+    .panel-label {
+      font-family: "Caveat", cursive;
+      font-size: 15px;
+      color: var(--vermilion);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .panel h2 {
+      font-family: "Shippori Mincho", serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin: 2px 0 6px;
+      line-height: 1.25;
+    }
+    .panel h3 {
+      font-family: "Shippori Mincho", serif;
+      font-size: 12px;
+      margin: 6px 0 3px;
+      color: var(--gold);
+    }
+    .tiny { font-size: 10px; color: var(--ink-soft); line-height: 1.35; }
+    .slot {
+      font-size: 10.5px;
+      margin-bottom: 4px;
+      padding-left: 8px;
+      border-left: 2px solid var(--vermilion);
+    }
+    .slot strong { display: block; font-size: 11px; }
+    .slot .t { font-family: "Caveat", cursive; color: var(--vermilion); font-size: 13px; font-weight: 700; }
+    .tag {
+      display: inline-block;
+      font-size: 9px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 0 5px;
+      margin: 1px 2px 1px 0;
+      color: var(--ink-soft);
+    }
+    .tag.gold { border-color: var(--gold); color: var(--gold); }
+    .tag.warn { border-color: var(--vermilion); color: var(--vermilion); }
+    .tag.car { border-color: var(--water); color: var(--water); }
+    .tag.baby { border-color: var(--sage); color: var(--sage); }
+
+    /* COVER */
+    .p-cover {
+      background:
+        radial-gradient(circle at 80% 20%, rgba(201,162,39,0.18), transparent 40%),
+        linear-gradient(160deg, #f8efdf, #ead7b8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .p-cover .stamp {
+      align-self: flex-end;
+      width: 54px;
+      height: 54px;
+      border: 2.5px solid var(--vermilion);
+      border-radius: 50%;
+      color: var(--vermilion);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 9px;
+      font-weight: 700;
+      transform: rotate(10deg);
+      line-height: 1.2;
+      background: rgba(194,59,34,0.05);
+    }
+    .p-cover .big {
+      font-family: "Shippori Mincho", serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+    }
+    .p-cover .gold-txt { color: var(--gold); }
+    .p-cover .sub {
+      font-family: "Caveat", cursive;
+      font-size: 16px;
+      color: var(--vermilion);
+      margin-top: 4px;
+    }
+    .p-cover .meta {
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      margin-top: 8px;
+    }
+    .p-cover .icons {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      opacity: 0.85;
+    }
+    .p-cover .icons svg { width: 36px; height: 36px; }
+    .p-cover .fold-hint {
+      font-size: 9.5px;
+      color: var(--ink-soft);
+      border-top: 1px dashed var(--line);
+      padding-top: 6px;
+      margin-top: 6px;
+    }
+
+    /* MAP panel */
+    .p-map svg { width: 100%; height: auto; display: block; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 8px;
+      margin-top: 4px;
+      font-size: 9px;
+      color: var(--ink-soft);
+    }
+    .legend i {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 3px;
+      vertical-align: middle;
+    }
+
+    /* BACK tips */
+    .p-tips {
+      background: linear-gradient(180deg, #f6ebda, #efe0c8);
+    }
+    .tip-row {
+      font-size: 10px;
+      margin-bottom: 5px;
+      padding: 5px 6px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 4px;
+      border-left: 3px solid var(--gold);
+    }
+    .tip-row strong { color: var(--gold); }
+
+    .qr-box {
+      margin-top: 6px;
+      padding: 6px;
+      border: 1.5px dashed var(--line);
+      border-radius: 6px;
+      font-size: 9.5px;
+      text-align: center;
+      color: var(--ink-soft);
+    }
+    .qr-box a { color: var(--water); word-break: break-all; }
+
+    /* Back cover strip */
+    .p-d2-detail {
+      background: linear-gradient(135deg, rgba(232,201,106,0.15), var(--paper));
+    }
+
+    .route {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2px;
+      margin: 6px 0;
+      font-size: 9.5px;
+    }
+    .route .n {
+      flex: 1;
+      text-align: center;
+      background: #fff8eb;
+      border: 1.5px solid rgba(184,146,42,0.5);
+      border-radius: 5px;
+      padding: 4px 2px;
+    }
+    .route .n b { display: block; font-size: 10px; }
+    .route .a { color: var(--gold); font-family: "Caveat", cursive; font-size: 14px; font-weight: 700; }
+
+    @media screen and (max-width: 900px) {
+      .sheet {
+        width: 100%;
+        aspect-ratio: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .panel {
+        border-right: none;
+        border-bottom: 1px dashed var(--line);
+        min-height: 220px;
+      }
+      .sheet::before { display: none; }
+      .p-cover .big { font-size: 26px; }
+    }
+
+    @media print {
+      @page {
+        size: A3 landscape;
+        margin: 0;
+      }
+      body { background: white; }
+      .screen-only { display: none !important; }
+      .sheet {
+        width: 420mm;
+        height: 297mm;
+        max-width: none;
+        margin: 0;
+        box-shadow: none;
+        aspect-ratio: auto;
+        page-break-after: always;
+      }
+      .sheet::before { display: none; }
+      .panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-only">
+    <h1>🗺 可摺疊口袋地圖</h1>
+    <p>設計為 <strong>A3 橫向 · 2 列 × 3 欄</strong>，印出後可摺成 6 面口袋卡，塞進推車側袋或爸爸口袋。</p>
+    <ol>
+      <li>點「列印地圖」→ 紙張選 <strong>A3 橫向</strong>、邊界無／最小</li>
+      <li>先<strong>左右對摺</strong>成三等分（沿虛線），再<strong>上下對摺</strong>成六面</li>
+      <li>封面朝外：金色「親子口袋地圖」那一面</li>
+    </ol>
+    <div class="btns">
+      <button onclick="window.print()">列印地圖</button>
+      <a class="secondary" href="index.html">← 回完整手帳</a>
+      <a class="secondary" href="京都大阪親子手繪行程.pptx" download>下載 PPT</a>
+    </div>
+  </div>
+
+  <div class="sheet" id="map">
+    <!-- Panel 1: COVER (front when folded) -->
+    <section class="panel p-cover">
+      <div>
+        <div class="stamp">御金<br />祈願<br />安全</div>
+        <div class="panel-label">Pocket Map</div>
+        <div class="big">京都 · 大阪<br /><span class="gold-txt">親子口袋地圖</span></div>
+        <div class="sub">2026.8.3 – 8.8 · 專車直達版</div>
+        <div class="meta">
+          星宇 · 關西 KIX<br />
+          nol kyoto sanjo → OMO7 Osaka<br />
+          含御金神社 · 幼兒友善動線
+        </div>
+        <div class="icons" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M6 14 H34 M9 14 V32 M31 14 V32 M5 11 H35 M7 8 V14 M33 8 V14" stroke="#b8922a" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 40 40" fill="none"><path d="M8 30 H32 V24 H26 V18 H32 V12 H24 L20 6 L16 12 H8 V18 H14 V24 H8 Z" stroke="#2a2218" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="20" rx="14" ry="7" stroke="#3f6173" stroke-width="1.6"/><circle cx="27" cy="18" r="1.2" fill="#3f6173"/></svg>
+        </div>
+      </div>
+      <div class="fold-hint">
+        ✂ 列印 A3 橫向 → 左右三等分摺 → 上下對摺<br />
+        推車側袋 / 爸爸口袋友善尺寸
+      </div>
+    </section>
+
+    <!-- Panel 2: Overview map Kyoto-Osaka -->
+    <section class="panel p-map">
+      <div class="panel-label">Overview</div>
+      <h2>六日地理一覽</h2>
+      <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="272" height="192" rx="4" fill="#fff9ef" stroke="#b8922a" stroke-width="1" stroke-dasharray="3 2"/>
+        <!-- Kyoto zone -->
+        <rect x="20" y="20" width="120" height="100" rx="8" fill="#f5ebe0" stroke="#c23b22" stroke-width="1.5"/>
+        <text x="80" y="38" text-anchor="middle" font-family="Shippori Mincho,serif" font-size="12" font-weight="700" fill="#c23b22">京都 KYOTO</text>
+        <text x="80" y="54" text-anchor="middle" font-size="9" fill="#5c4a38">D1–D2 · nol sanjo</text>
+        <circle cx="55" cy="72" r="5" fill="#b8922a"/>
+        <text x="64" y="75" font-size="8" fill="#2a2218">御金神社</text>
+        <circle cx="95" cy="72" r="5" fill="#2a2218"/>
+        <text x="104" y="75" font-size="8" fill="#2a2218">二条城</text>
+        <circle cx="75" cy="98" r="4" fill="#5f7550"/>
+        <text x="84" y="101" font-size="8" fill="#2a2218">京瓷美</text>
+        <!-- Osaka zone -->
+        <rect x="150" y="50" width="110" height="110" rx="8" fill="#e8f0f4" stroke="#3f6173" stroke-width="1.5"/>
+        <text x="205" y="70" text-anchor="middle" font-family="Shippori Mincho,serif" font-size="12" font-weight="700" fill="#3f6173">大阪 OSAKA</text>
+        <text x="205" y="86" text-anchor="middle" font-size="9" fill="#5c4a38">D3–D6 · OMO7</text>
+        <circle cx="180" cy="108" r="4" fill="#3f6173"/>
+        <text x="188" y="111" font-size="8" fill="#2a2218">海遊館</text>
+        <circle cx="220" cy="108" r="4" fill="#c45c3e"/>
+        <text x="228" y="111" font-size="8" fill="#2a2218">Harukas</text>
+        <circle cx="200" cy="132" r="4" fill="#5f7550"/>
+        <text x="208" y="135" font-size="8" fill="#2a2218">大丸</text>
+        <!-- Kobe tip -->
+        <rect x="20" y="135" width="70" height="40" rx="6" fill="#fceee8" stroke="#c45c3e" stroke-width="1.2"/>
+        <text x="55" y="152" text-anchor="middle" font-size="9" font-weight="700" fill="#c45c3e">神戶 D5</text>
+        <text x="55" y="166" text-anchor="middle" font-size="8" fill="#5c4a38">麵包超人</text>
+        <!-- arrows -->
+        <path d="M140 70 L150 90" stroke="#c23b22" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#a)"/>
+        <text x="138" y="62" font-family="Caveat,cursive" font-size="11" fill="#c23b22">D3 專車</text>
+        <path d="M90 135 L90 120" stroke="#5c4a38" stroke-width="1" stroke-dasharray="2 2"/>
+        <defs>
+          <marker id="a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#c23b22"/></marker>
+        </defs>
+      </svg>
+      <div class="legend">
+        <span><i style="background:#b8922a"></i>神社</span>
+        <span><i style="background:#2a2218"></i>古城</span>
+        <span><i style="background:#3f6173"></i>室內避暑</span>
+        <span><i style="background:#c45c3e"></i>放電／夜景</span>
+      </div>
+    </section>
+
+    <!-- Panel 3: D1 + D2 summary -->
+    <section class="panel">
+      <div class="panel-label">D1 · D2</div>
+      <h2>京都兩日速查</h2>
+      <h3>D1 8/3 抵達</h3>
+      <div class="slot">
+        <span class="t">12:05</span>
+        <strong>KIX 降落</strong>
+        <span class="tiny">13:30 專車 → nol sanjo（80–90 分）</span>
+      </div>
+      <div class="slot">
+        <span class="t">傍晚</span>
+        <strong>LE LABO + 超市</strong>
+        <span class="tiny">町家香氛散步 · 幼兒物資</span>
+      </div>
+      <h3>D2 8/4 財運 · 古城 ★</h3>
+      <div class="slot" style="border-color:#b8922a">
+        <span class="t" style="color:#b8922a">08:00</span>
+        <strong>御金神社快閃</strong>
+        <span class="tiny">金色鳥居 · 金運御守 · 15–20 分</span>
+        <div><span class="tag gold">新增</span><span class="tag warn">境內極小</span></div>
+      </div>
+      <div class="slot">
+        <span class="t" style="color:#b8922a">08:30</span>
+        <strong>二条城放電</strong>
+        <span class="tiny">步行 ≈500m / 6–8 分</span>
+      </div>
+      <div class="slot">
+        <span class="t" style="color:#b8922a">11:00</span>
+        <strong>京瓷美術館 + ENFUSE</strong>
+        <span class="tiny">計程車 · 避暑 · 15:00 回房小睡</span>
+      </div>
+      <div class="slot">
+        <span class="t" style="color:#b8922a">17:30</span>
+        <strong>檀王法林寺 → 鴨川</strong>
+      </div>
+    </section>
+
+    <!-- Panel 4: D2 Mikane detail -->
+    <section class="panel p-d2-detail">
+      <div class="panel-label">★ Mikane Focus</div>
+      <h2>御金神社 · 口袋攻略</h2>
+      <p class="tiny" style="margin-bottom:4px">京都市中京區 · 近二条城 / 烏丸御池 · 金山毘古神</p>
+      <div class="route">
+        <div class="n"><b>御金</b>08:00</div>
+        <div class="a">→</div>
+        <div class="n"><b>二条城</b>6分</div>
+        <div class="a">→</div>
+        <div class="n"><b>京瓷</b>計程車</div>
+      </div>
+      <h3>優勢</h3>
+      <p class="tiny">與二条城僅約 500 公尺；與 nol sanjo 同中京區，極順路。</p>
+      <h3>痛點</h3>
+      <p class="tiny">熱門小型神社，境內極度狹小、常排隊擁擠。</p>
+      <h3>切入策略</h3>
+      <p class="tiny">
+        · 清晨 08:00–08:30 人少窗口<br />
+        · 人多時：<strong>推車停入口外圍</strong><br />
+        · 大人輪流抱嬰／揹帶進去快閃參拜與買御守<br />
+        · 總時長控在 15–20 分鐘，不影響二条城與午睡
+      </p>
+      <div style="margin-top:6px">
+        <span class="tag gold">金運御守</span>
+        <span class="tag baby">推車外圍</span>
+        <span class="tag warn">勿硬推入</span>
+      </div>
+    </section>
+
+    <!-- Panel 5: D3–D6 -->
+    <section class="panel">
+      <div class="panel-label">D3 – D6</div>
+      <h2>大阪四日速查</h2>
+      <div class="slot" style="border-color:#5f7550">
+        <span class="t" style="color:#5f7550">D3 8/5</span>
+        <strong>移動日</strong>
+        <span class="tiny">10:00 退房 → 專車吉祥院天滿宮（30–40分）→ OMO7<br />傍晚 Miya-green 草皮 + PIKA PIKA NIGHT</span>
+        <div><span class="tag car">專車點對點</span></div>
+      </div>
+      <div class="slot" style="border-color:#3f6173">
+        <span class="t" style="color:#3f6173">D4 8/6</span>
+        <strong>海遊館 · Harukas</strong>
+        <span class="tiny">上午鯨鯊（室內恆溫推車）→ 午睡 → 傍晚阿倍野高空／近鐵百貨</span>
+        <div><span class="tag baby">推車友善</span></div>
+      </div>
+      <div class="slot" style="border-color:#c45c3e">
+        <span class="t" style="color:#c45c3e">D5 8/7</span>
+        <strong>神戶超人 · 大丸採購</strong>
+        <span class="tiny">麵包超人博物館（開館直入）→ 午睡 → <strong>禁心齋橋戶外街</strong>，直進大丸＋阿卡將</span>
+        <div><span class="tag warn">禁戶外商店街</span></div>
+      </div>
+      <div class="slot" style="border-color:#5c4a38">
+        <span class="t" style="color:#5c4a38">D6 8/8</span>
+        <strong>專車返台</strong>
+        <span class="tiny">08:30 早餐 · 10:00 專車 → KIX · JX821 13:15</span>
+        <div><span class="tag car">航廈門口</span></div>
+      </div>
+    </section>
+
+    <!-- Panel 6: Tips + link -->
+    <section class="panel p-tips">
+      <div class="panel-label">Iron Rules</div>
+      <h2>幼兒鐵律 · 專車三趟</h2>
+      <div class="tip-row">
+        <strong>① 午睡不可破</strong><br />
+        每日中午／午後死守常態小睡，行程為作息讓路。
+      </div>
+      <div class="tip-row">
+        <strong>② 午後室內避暑</strong><br />
+        美術館、水族館、百貨、OMO Base——冷氣優先。
+      </div>
+      <div class="tip-row">
+        <strong>③ 專車三趟</strong><br />
+        D1 KIX→京都 · D2 京都→天滿宮→OMO7 · D3 OMO7→KIX
+      </div>
+      <div class="tip-row">
+        <strong>④ 小神社策略</strong><br />
+        御金＝清晨快閃；推車不入狹窄境內。
+      </div>
+      <div class="tip-row">
+        <strong>⑤ 採購守則</strong><br />
+        心齋橋只進大丸百貨，不走人潮戶外街。
+      </div>
+      <div class="qr-box">
+        完整手繪手帳網頁<br />
+        <a id="site-link" href="index.html">打開線上版 →</a>
+        <div style="margin-top:4px;font-family:Caveat,cursive;font-size:14px;color:#c23b22">Safe travels · 金運滿滿</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // If deployed, rewrite absolute URL
+    (function () {
+      var a = document.getElementById("site-link");
+      if (location.protocol !== "file:" && a) {
+        a.href = location.origin + location.pathname.replace(/pocket-map\.html.*/, "index.html");
+        a.textContent = a.href;
+      }
+    })();
+  </script>
+</body>
+</html>
