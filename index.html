@@ -56,10 +56,10 @@
     .page {
       max-width: 920px;
       margin: 0 auto;
-      padding: 2.5rem 1.25rem 5.5rem;
+      padding: 2.5rem 1.25rem 4rem;
       padding-left: max(1.25rem, env(safe-area-inset-left));
       padding-right: max(1.25rem, env(safe-area-inset-right));
-      padding-bottom: max(5.5rem, calc(4.5rem + env(safe-area-inset-bottom)));
+      padding-bottom: max(4rem, calc(3.5rem + env(safe-area-inset-bottom)));
     }
 
     img, svg { max-width: 100%; height: auto; }
@@ -502,7 +502,7 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0.4rem 0.5rem;
+      gap: 0.35rem 0.4rem;
       margin: 1rem 0 0.25rem;
       padding: 0.85rem;
       background: rgba(255,255,255,0.4);
@@ -514,28 +514,61 @@
       background: #fff8eb;
       border: 2px solid rgba(154,123,26,0.5);
       border-radius: 8px;
-      padding: 0.45rem 0.7rem;
+      padding: 0.55rem 0.85rem;
       text-align: center;
-      min-width: 100px;
+      min-width: 110px;
       box-shadow: 2px 3px 0 rgba(154,123,26,0.12);
+      position: relative;
+      z-index: 1;
     }
 
     .route-node strong {
       display: block;
       font-family: "Shippori Mincho", serif;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
+      line-height: 1.3;
     }
 
     .route-node small {
-      font-size: 0.72rem;
+      display: block;
+      font-size: 0.74rem;
       color: var(--ink-soft);
+      margin-top: 0.2rem;
+      line-height: 1.35;
     }
 
     .route-arrow {
-      font-family: "Caveat", cursive;
-      font-size: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.1rem;
+      flex: 0 0 auto;
+      min-width: 4.5rem;
       color: #9a7b1a;
+      text-align: center;
+      z-index: 0;
+    }
+
+    .route-arrow .route-arrow-mark {
+      font-family: "Caveat", cursive;
+      font-size: 1.35rem;
       font-weight: 700;
+      line-height: 1;
+    }
+
+    .route-arrow .route-arrow-mark--v { display: none; }
+
+    .route-arrow .route-arrow-label {
+      font-family: "Klee One", "Noto Serif TC", serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      white-space: nowrap;
+      background: rgba(255, 248, 235, 0.92);
+      padding: 0.1rem 0.35rem;
+      border-radius: 999px;
     }
 
     /* map sketch */
@@ -635,42 +668,114 @@
       margin-bottom: 0.35rem;
     }
 
-    .fab-group {
+    /* Collapsible tools FAB (bottom-right) */
+    .fab-wrap {
       position: fixed;
-      bottom: 1.25rem;
-      right: 1.25rem;
+      right: max(1rem, env(safe-area-inset-right));
+      bottom: max(1rem, env(safe-area-inset-bottom));
       z-index: 200;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
 
-    .print-btn, .fab-link {
-      background: var(--ink);
-      color: var(--paper);
-      border: none;
-      border-radius: 999px;
-      padding: 0.65rem 1.1rem;
-      font-family: "Klee One", serif;
-      font-size: 0.88rem;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(42,34,24,0.3);
-      transition: transform 0.15s ease, background 0.15s;
-      text-decoration: none;
-      display: inline-block;
+    .fab-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.4rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px) scale(0.96);
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
     }
 
-    .fab-link.secondary {
-      background: rgba(243, 230, 208, 0.95);
+    .fab-wrap.is-open .fab-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .fab-menu a,
+    .fab-menu button {
+      appearance: none;
+      border: 1.5px solid rgba(42, 34, 24, 0.18);
+      background: rgba(255, 248, 235, 0.97);
       color: var(--ink);
-      border: 1.5px solid rgba(42,34,24,0.25);
+      border-radius: 999px;
+      padding: 0.55rem 0.95rem;
+      font-family: "Klee One", serif;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(42, 34, 24, 0.16);
+      white-space: nowrap;
+      text-align: left;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      -webkit-tap-highlight-color: rgba(194, 59, 34, 0.15);
     }
 
-    .print-btn:hover, .fab-link:hover {
+    .fab-menu a:hover,
+    .fab-menu button:hover,
+    .fab-menu a:focus-visible,
+    .fab-menu button:focus-visible {
       background: var(--vermilion);
       color: var(--paper);
-      transform: scale(1.04);
+      border-color: var(--vermilion);
+      outline: none;
+    }
+
+    .fab-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid rgba(42, 34, 24, 0.12);
+      background: var(--ink);
+      color: var(--paper);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(42, 34, 24, 0.28);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.18s ease, background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .fab-toggle:hover,
+    .fab-toggle:focus-visible {
+      background: var(--vermilion);
+      outline: none;
+      transform: scale(1.05);
+    }
+
+    .fab-wrap.is-open .fab-toggle {
+      background: var(--vermilion);
+      transform: rotate(45deg);
+    }
+
+    .fab-toggle svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    .fab-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 199;
+      background: transparent;
+      display: none;
+    }
+
+    .fab-wrap.is-open + .fab-backdrop,
+    body.fab-open .fab-backdrop {
+      display: block;
     }
 
     .share-bar {
@@ -745,16 +850,32 @@
       }
       .route-flow {
         flex-direction: column;
-        gap: 0.35rem;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.75rem;
       }
       .route-node {
         width: 100%;
-        max-width: 280px;
+        max-width: none;
         min-width: 0;
+        padding: 0.7rem 0.85rem;
       }
       .route-arrow {
-        transform: rotate(90deg);
-        line-height: 1;
+        flex-direction: row;
+        gap: 0.45rem;
+        min-width: 0;
+        width: 100%;
+        padding: 0.5rem 0;
+        justify-content: center;
+      }
+      .route-arrow .route-arrow-mark--h { display: none; }
+      .route-arrow .route-arrow-mark--v {
+        display: inline;
+        font-size: 1.05rem;
+      }
+      .route-arrow .route-arrow-label {
+        white-space: nowrap;
+        font-size: 0.78rem;
       }
       .map-sketch {
         padding: 0.75rem;
@@ -769,10 +890,10 @@
     /* ========== RESPONSIVE: Phone ========== */
     @media (max-width: 640px) {
       .page {
-        padding: 1rem 0.85rem 6.5rem;
+        padding: 1rem 0.85rem 4rem;
         padding-left: max(0.85rem, env(safe-area-inset-left));
         padding-right: max(0.85rem, env(safe-area-inset-right));
-        padding-bottom: max(6.5rem, calc(5.5rem + env(safe-area-inset-bottom)));
+        padding-bottom: max(4rem, calc(3.5rem + env(safe-area-inset-bottom)));
       }
 
       .cover {
@@ -916,41 +1037,9 @@
       .tip-box .tip-label { font-size: 1.05rem; }
       .tip-box p, .tip-box ul { font-size: 0.86rem; }
 
-      /* Bottom action bar on phones */
-      .fab-group {
-        left: 0;
-        right: 0;
-        bottom: 0;
-        flex-direction: row;
-        justify-content: stretch;
-        align-items: stretch;
-        gap: 0;
-        padding: 0.55rem 0.65rem;
-        padding-bottom: max(0.55rem, env(safe-area-inset-bottom));
-        background: rgba(243, 230, 208, 0.94);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-top: 1.5px solid rgba(42, 34, 24, 0.12);
-        box-shadow: 0 -8px 28px rgba(42, 34, 24, 0.12);
-      }
-      .print-btn, .fab-link {
-        flex: 1;
-        text-align: center;
-        border-radius: 12px;
-        padding: 0.7rem 0.35rem;
-        font-size: 0.78rem;
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: none;
-        margin: 0 0.2rem;
-      }
-      .fab-link.secondary {
-        background: rgba(255, 255, 255, 0.65);
-      }
-      .print-btn {
-        background: var(--ink);
+      .fab-toggle {
+        width: 50px;
+        height: 50px;
       }
 
       .footer {
@@ -967,39 +1056,18 @@
         min-width: 100%;
       }
       .cover h1 { padding-right: 3.6rem; }
-      .print-btn, .fab-link { font-size: 0.72rem; padding: 0.65rem 0.2rem; }
-    }
-
-    /* Landscape phones: keep fab as side stack so content is usable */
-    @media (max-height: 480px) and (orientation: landscape) {
-      .fab-group {
-        left: auto;
-        right: max(0.6rem, env(safe-area-inset-right));
-        bottom: max(0.6rem, env(safe-area-inset-bottom));
-        width: auto;
-        flex-direction: column;
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        padding: 0;
-        backdrop-filter: none;
+      .fab-menu a,
+      .fab-menu button {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.8rem;
       }
-      .print-btn, .fab-link {
-        flex: none;
-        min-height: 36px;
-        font-size: 0.75rem;
-        padding: 0.45rem 0.75rem;
-        border-radius: 999px;
-        box-shadow: 0 6px 16px rgba(42,34,24,0.2);
-      }
-      .page { padding-bottom: 2rem; }
     }
 
     @media print {
       body { background: white; }
       body::before { display: none; }
       .page { max-width: 100%; padding: 0; }
-      .day-nav, .fab-group, .share-bar { display: none !important; }
+      .day-nav, .fab-wrap, .fab-backdrop, .share-bar { display: none !important; }
       .cover, .day, .overview {
         box-shadow: none;
         break-inside: avoid;
@@ -1012,16 +1080,32 @@
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .ov-card, .print-btn, .fab-link, .share-bar a { transition: none; }
+      .ov-card, .share-bar a, .fab-menu, .fab-toggle { transition: none; }
     }
   </style>
 </head>
 <body>
-  <div class="fab-group">
-    <a class="fab-link secondary" href="pocket-map.html">口袋地圖</a>
-    <a class="fab-link secondary" href="itinerary.pptx">下載 PPT</a>
-    <button class="print-btn" type="button" onclick="window.print()">列印手帳</button>
+  <div class="fab-wrap" id="fab-wrap">
+    <div class="fab-menu" id="fab-menu" role="menu" aria-label="工具選單">
+      <a role="menuitem" href="pocket-map.html">🗺 口袋地圖</a>
+      <a role="menuitem" href="itinerary.pptx">📑 下載 PPT</a>
+      <button type="button" role="menuitem" onclick="window.print()">🖨 列印手帳</button>
+    </div>
+    <button
+      type="button"
+      class="fab-toggle"
+      id="fab-toggle"
+      aria-expanded="false"
+      aria-controls="fab-menu"
+      aria-label="開啟工具選單"
+      title="工具"
+    >
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+    </button>
   </div>
+  <button type="button" class="fab-backdrop" id="fab-backdrop" aria-label="關閉選單" tabindex="-1"></button>
 
   <div class="page">
     <!-- COVER -->
@@ -1198,12 +1282,20 @@
           <strong>御金神社</strong>
           <small>08:00–08:30 快閃</small>
         </div>
-        <div class="route-arrow">→ 步行 6 分 →</div>
+        <div class="route-arrow" aria-hidden="true">
+          <span class="route-arrow-mark route-arrow-mark--h">→</span>
+          <span class="route-arrow-mark route-arrow-mark--v">↓</span>
+          <span class="route-arrow-label">步行 6 分</span>
+        </div>
         <div class="route-node">
           <strong>二条城</strong>
           <small>08:30–10:30 放電</small>
         </div>
-        <div class="route-arrow">→ 計程車 →</div>
+        <div class="route-arrow" aria-hidden="true">
+          <span class="route-arrow-mark route-arrow-mark--h">→</span>
+          <span class="route-arrow-mark route-arrow-mark--v">↓</span>
+          <span class="route-arrow-label">計程車</span>
+        </div>
         <div class="route-node">
           <strong>京瓷美術館</strong>
           <small>11:00–14:00 避暑</small>
@@ -1505,6 +1597,29 @@
         if (el && location.protocol !== "file:") {
           el.textContent = "線上網址：" + location.href.split("?")[0];
         }
+
+        var wrap = document.getElementById("fab-wrap");
+        var toggle = document.getElementById("fab-toggle");
+        var backdrop = document.getElementById("fab-backdrop");
+        if (!wrap || !toggle) return;
+
+        function setOpen(open) {
+          wrap.classList.toggle("is-open", open);
+          document.body.classList.toggle("fab-open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute("aria-label", open ? "關閉工具選單" : "開啟工具選單");
+        }
+
+        toggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          setOpen(!wrap.classList.contains("is-open"));
+        });
+        if (backdrop) {
+          backdrop.addEventListener("click", function () { setOpen(false); });
+        }
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") setOpen(false);
+        });
       })();
     </script>
   </div>
