@@ -2,7 +2,8 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#b9a17f" />
   <title>可摺疊口袋地圖 · 京都大阪親子行程</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,37 +26,60 @@
       color: var(--ink);
       background: #b9a17f;
       line-height: 1.4;
+      min-height: 100vh;
     }
     .screen-only {
       max-width: 960px;
       margin: 0 auto;
       padding: 1.25rem 1rem 0.5rem;
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
       color: #2a2218;
     }
     .screen-only h1 {
       font-family: "Shippori Mincho", serif;
-      font-size: 1.35rem;
+      font-size: clamp(1.2rem, 4vw, 1.35rem);
       margin-bottom: 0.4rem;
     }
     .screen-only p { font-size: 0.92rem; opacity: 0.9; margin-bottom: 0.5rem; }
     .screen-only ol { margin: 0.4rem 0 0.8rem 1.2rem; font-size: 0.88rem; }
-    .screen-only .btns { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0 1rem; }
+    .screen-only .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.75rem 0 1rem;
+    }
     .screen-only a, .screen-only button {
       appearance: none;
       border: none;
       background: var(--ink);
       color: var(--paper);
-      padding: 0.55rem 1rem;
+      padding: 0.6rem 1.05rem;
       border-radius: 999px;
       font-family: inherit;
       font-size: 0.88rem;
       text-decoration: none;
       cursor: pointer;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: rgba(194, 59, 34, 0.15);
     }
     .screen-only a.secondary, .screen-only button.secondary {
       background: transparent;
       color: var(--ink);
       border: 1.5px solid var(--ink);
+    }
+    .device-hint {
+      display: none;
+      font-size: 0.82rem;
+      background: rgba(255,255,255,0.35);
+      border: 1px dashed rgba(42,34,24,0.25);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.75rem;
+      color: var(--ink-soft);
     }
 
     /* ===== Sheet: A3 landscape equivalent, 2×3 panels ===== */
@@ -271,20 +295,161 @@
     .route .n b { display: block; font-size: 10px; }
     .route .a { color: var(--gold); font-family: "Caveat", cursive; font-size: 14px; font-weight: 700; }
 
-    @media screen and (max-width: 900px) {
+    /* Laptop / wide tablet: keep 3×2 fold layout, scale sheet */
+    @media screen and (min-width: 901px) and (max-width: 1280px) {
+      .sheet {
+        width: min(100% - 1.5rem, 1000px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .panel { padding: 9px 10px; }
+      .p-cover .big { font-size: 18px; }
+      .tiny { font-size: 9.5px; }
+    }
+
+    /* Tablet: 2-column card grid */
+    @media screen and (max-width: 900px) and (min-width: 601px) {
+      .device-hint { display: block; }
       .sheet {
         width: 100%;
+        max-width: 720px;
+        aspect-ratio: auto;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .panel {
+        border-right: 1px dashed var(--line);
+        border-bottom: 1px dashed var(--line);
+        min-height: 260px;
+        padding: 14px 14px 16px;
+      }
+      .panel:nth-child(2n) { border-right: none; }
+      .panel:nth-child(n+5) { border-bottom: 1px dashed var(--line); }
+      .panel:last-child { border-bottom: none; }
+      /* cover spans full width on tablet */
+      .p-cover {
+        grid-column: 1 / -1;
+        min-height: 200px;
+      }
+      .sheet::before { display: none; }
+      .p-cover .big { font-size: 28px; }
+      .panel h2 { font-size: 16px; }
+      .slot { font-size: 12px; }
+      .slot strong { font-size: 12.5px; }
+      .tiny { font-size: 11px; }
+      .tip-row { font-size: 11.5px; }
+    }
+
+    /* Phone: stacked cards */
+    @media screen and (max-width: 600px) {
+      .device-hint { display: block; }
+      body {
+        background:
+          radial-gradient(ellipse at 20% 0%, #cbb892 0%, transparent 45%),
+          #b9a17f;
+      }
+      .screen-only {
+        padding: 1rem 0.85rem 0.35rem;
+        padding-left: max(0.85rem, env(safe-area-inset-left));
+        padding-right: max(0.85rem, env(safe-area-inset-right));
+      }
+      .screen-only .btns {
+        flex-direction: column;
+      }
+      .screen-only a, .screen-only button {
+        width: 100%;
+        min-height: 44px;
+      }
+      .screen-only ol { font-size: 0.84rem; padding-left: 0.2rem; }
+
+      .sheet {
+        width: 100%;
+        max-width: none;
         aspect-ratio: auto;
         grid-template-columns: 1fr;
         grid-template-rows: auto;
+        margin: 0 0 1.5rem;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+        border: none;
+        gap: 0.75rem;
+        padding: 0 0.85rem 1.5rem;
+        padding-left: max(0.85rem, env(safe-area-inset-left));
+        padding-right: max(0.85rem, env(safe-area-inset-right));
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
       }
       .panel {
-        border-right: none;
-        border-bottom: 1px dashed var(--line);
-        min-height: 220px;
+        border: 1.5px solid rgba(42,34,24,0.14) !important;
+        border-radius: 12px;
+        min-height: 0;
+        padding: 1rem 0.95rem 1.1rem;
+        box-shadow: 0 8px 22px rgba(42,34,24,0.12);
+        background: var(--paper);
       }
       .sheet::before { display: none; }
-      .p-cover .big { font-size: 26px; }
+      .p-cover .big { font-size: clamp(1.35rem, 6.5vw, 1.7rem); }
+      .p-cover .sub { font-size: 1.05rem; }
+      .p-cover .meta { font-size: 0.86rem; line-height: 1.45; }
+      .p-cover .stamp {
+        width: 48px;
+        height: 48px;
+        font-size: 8px;
+      }
+      .p-cover .icons svg { width: 40px; height: 40px; }
+      .p-cover .fold-hint {
+        font-size: 0.78rem;
+        line-height: 1.45;
+      }
+      .panel-label { font-size: 1rem; }
+      .panel h2 { font-size: 1.05rem; margin-bottom: 0.45rem; }
+      .panel h3 { font-size: 0.9rem; margin-top: 0.65rem; }
+      .slot {
+        font-size: 0.86rem;
+        margin-bottom: 0.55rem;
+        padding-left: 0.55rem;
+        line-height: 1.45;
+      }
+      .slot .t { font-size: 1rem; }
+      .slot strong { font-size: 0.92rem; }
+      .tiny { font-size: 0.8rem; line-height: 1.45; }
+      .tag {
+        font-size: 0.72rem;
+        padding: 0.12rem 0.45rem;
+        margin: 0.15rem 0.2rem 0.15rem 0;
+      }
+      .route {
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+      .route .n {
+        flex: 1 1 28%;
+        min-width: 72px;
+        padding: 0.45rem 0.25rem;
+        font-size: 0.78rem;
+      }
+      .route .n b { font-size: 0.85rem; }
+      .route .a { font-size: 1.1rem; }
+      .tip-row {
+        font-size: 0.84rem;
+        padding: 0.55rem 0.6rem;
+        margin-bottom: 0.45rem;
+        line-height: 1.45;
+      }
+      .qr-box {
+        font-size: 0.82rem;
+        padding: 0.7rem;
+      }
+      .qr-box a {
+        display: inline-block;
+        margin-top: 0.25rem;
+        word-break: break-all;
+      }
+      .legend { font-size: 0.78rem; gap: 0.35rem 0.65rem; }
+      .p-map svg { max-height: none; }
     }
 
     @media print {
@@ -293,18 +458,38 @@
         margin: 0;
       }
       body { background: white; }
-      .screen-only { display: none !important; }
+      .screen-only, .device-hint { display: none !important; }
       .sheet {
         width: 420mm;
         height: 297mm;
         max-width: none;
         margin: 0;
+        padding: 0;
+        gap: 0;
         box-shadow: none;
         aspect-ratio: auto;
         page-break-after: always;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        border: 1px solid rgba(0,0,0,0.15);
+        background: var(--paper);
+        border-radius: 0;
       }
+      .panel {
+        border-right: 1px dashed var(--line) !important;
+        border-bottom: 1px dashed var(--line) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        min-height: 0;
+        padding: 10px 12px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .panel:nth-child(3n) { border-right: none !important; }
+      .panel:nth-child(n+4) { border-bottom: none !important; }
+      .p-cover { grid-column: auto; }
       .sheet::before { display: none; }
-      .panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 </head>
@@ -312,13 +497,16 @@
   <div class="screen-only">
     <h1>🗺 可摺疊口袋地圖</h1>
     <p>設計為 <strong>A3 橫向 · 2 列 × 3 欄</strong>，印出後可摺成 6 面口袋卡，塞進推車側袋或爸爸口袋。</p>
+    <p class="device-hint">
+      📱 手機／平板瀏覽時會自動改成<strong>卡片直式排版</strong>方便滑動閱讀；要印成可摺口袋卡請用筆電開啟並選 A3 橫向列印。
+    </p>
     <ol>
       <li>點「列印地圖」→ 紙張選 <strong>A3 橫向</strong>、邊界無／最小</li>
       <li>先<strong>左右對摺</strong>成三等分（沿虛線），再<strong>上下對摺</strong>成六面</li>
       <li>封面朝外：金色「親子口袋地圖」那一面</li>
     </ol>
     <div class="btns">
-      <button onclick="window.print()">列印地圖</button>
+      <button type="button" onclick="window.print()">列印地圖</button>
       <a class="secondary" href="index.html">← 回完整手帳</a>
       <a class="secondary" href="itinerary.pptx" download>下載 PPT</a>
     </div>
