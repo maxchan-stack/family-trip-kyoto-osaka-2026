@@ -795,6 +795,202 @@
       margin-top: 0.2rem;
     }
 
+    /* utility: weather + Visit Japan Web */
+    .utility {
+      background: var(--paper);
+      border-radius: 3px 10px 5px 8px;
+      padding: 1.35rem 1.2rem 1.4rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid rgba(42,34,24,0.14);
+      box-shadow: 0 12px 32px var(--shadow);
+    }
+
+    .utility h2 {
+      font-family: "Shippori Mincho", serif;
+      font-size: 1.15rem;
+      text-align: center;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+    }
+
+    .utility .util-sub {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .weather-card {
+      background: rgba(255,255,255,0.55);
+      border: 1.5px solid rgba(42,34,24,0.12);
+      border-radius: 10px;
+      padding: 0.85rem 0.8rem;
+      position: relative;
+    }
+
+    .weather-card.is-near {
+      border-color: rgba(74, 107, 124, 0.55);
+      box-shadow: 0 0 0 2px rgba(74, 107, 124, 0.12);
+    }
+
+    .weather-card .city {
+      font-family: "Shippori Mincho", serif;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+    }
+
+    .weather-card .badge-near {
+      display: none;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #4a6b7c;
+      background: rgba(74,107,124,0.12);
+      border-radius: 999px;
+      padding: 0.12rem 0.45rem;
+      white-space: nowrap;
+    }
+
+    .weather-card.is-near .badge-near { display: inline-block; }
+
+    .weather-card .temp {
+      font-family: "Caveat", cursive;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--vermilion);
+      line-height: 1.1;
+      margin: 0.25rem 0 0.15rem;
+    }
+
+    .weather-card .desc {
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .weather-card .meta {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin-top: 0.35rem;
+      line-height: 1.45;
+    }
+
+    .weather-card .status {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      min-height: 1.2em;
+    }
+
+    .weather-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: center;
+      margin-top: 0.85rem;
+    }
+
+    .weather-actions button,
+    .weather-actions a {
+      appearance: none;
+      border: 1.5px solid rgba(42,34,24,0.18);
+      background: rgba(255,255,255,0.65);
+      color: var(--ink);
+      font-family: "Klee One", serif;
+      font-size: 0.8rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      -webkit-tap-highlight-color: rgba(194, 59, 34, 0.12);
+    }
+
+    .weather-actions button:hover,
+    .weather-actions a:hover {
+      border-color: var(--water);
+      color: var(--water);
+    }
+
+    .weather-actions button:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
+    .weather-updated {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      margin-top: 0.55rem;
+    }
+
+    .vjw-card {
+      margin-top: 1rem;
+      padding: 1rem 1rem 1.05rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(74,107,124,0.1), rgba(243,230,208,0.9));
+      border: 1.5px solid rgba(74, 107, 124, 0.35);
+      text-align: center;
+    }
+
+    .vjw-card .vjw-title {
+      font-family: "Shippori Mincho", serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--water);
+      margin-bottom: 0.3rem;
+    }
+
+    .vjw-card p {
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .vjw-card a.vjw-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: var(--water);
+      color: #fff;
+      text-decoration: none;
+      font-family: "Klee One", serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.7rem 1.25rem;
+      border-radius: 999px;
+      min-height: 46px;
+      box-shadow: 0 6px 16px rgba(74,107,124,0.25);
+      word-break: break-all;
+    }
+
+    .vjw-card a.vjw-btn:hover {
+      background: #3a5563;
+    }
+
+    .vjw-card .vjw-url {
+      display: block;
+      margin-top: 0.55rem;
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
     /* footer */
     .footer {
       text-align: center;
@@ -808,6 +1004,33 @@
       font-size: 1.35rem;
       color: var(--ink);
       margin-bottom: 0.35rem;
+    }
+
+    .footer a {
+      color: inherit;
+    }
+
+    .footer .footer-vjw {
+      margin-top: 0.75rem;
+    }
+
+    .footer .footer-vjw a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background: var(--water);
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      min-height: 42px;
+      font-size: 0.9rem;
+    }
+
+    .footer .footer-vjw a:hover {
+      background: #3a5563;
     }
 
     /* Collapsible tools FAB (bottom-right) */
@@ -1213,6 +1436,25 @@
         font-size: 0.8rem;
       }
       .footer .hand { font-size: 1.2rem; }
+
+      .utility { padding: 1.1rem 0.9rem 1.15rem; }
+      .weather-grid {
+        grid-template-columns: 1fr;
+      }
+      .weather-card .temp { font-size: 1.9rem; }
+      .weather-actions {
+        flex-direction: column;
+      }
+      .weather-actions button,
+      .weather-actions a {
+        width: 100%;
+        justify-content: center;
+      }
+      .vjw-card a.vjw-btn {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 0.75rem 0.9rem;
+      }
     }
 
     /* ========== RESPONSIVE: Small phone ========== */
@@ -1233,7 +1475,7 @@
       body { background: white; }
       body::before { display: none; }
       .page { max-width: 100%; padding: 0; }
-      .day-nav, .fab-wrap, .fab-backdrop, .share-bar { display: none !important; }
+      .day-nav, .fab-wrap, .fab-backdrop, .share-bar, .weather-actions { display: none !important; }
       .cover, .day, .overview {
         box-shadow: none;
         break-inside: avoid;
@@ -1253,6 +1495,8 @@
 <body>
   <div class="fab-wrap" id="fab-wrap">
     <div class="fab-menu" id="fab-menu" role="menu" aria-label="工具選單">
+      <a role="menuitem" href="https://www.vjw.digital.go.jp/main/#/vjwplo001" target="_blank" rel="noopener noreferrer">🛂 Visit Japan Web</a>
+      <a role="menuitem" href="#utility">🌤 京都大阪天氣</a>
       <a role="menuitem" href="pocket-map.html">🗺 口袋地圖</a>
       <a role="menuitem" href="itinerary.pptx">📑 下載 PPT</a>
       <button type="button" role="menuitem" onclick="window.print()">🖨 列印手帳</button>
@@ -1789,15 +2033,71 @@
       </div>
     </section>
 
+    <section class="utility" id="utility" aria-label="實用工具：天氣與入境">
+      <h2>✦ 即時天氣 · 入境出示 ✦</h2>
+      <p class="util-sub">京都／大阪即時氣象（Open-Meteo）· 可定位判斷目前較近哪一城 · 入境用 Visit Japan Web</p>
+
+      <div class="weather-grid">
+        <article class="weather-card" id="wx-kyoto" data-city="kyoto">
+          <div class="city">
+            <span>京都 Kyoto</span>
+            <span class="badge-near">較靠近你</span>
+          </div>
+          <div class="status" data-wx="status">載入中…</div>
+          <div class="temp" data-wx="temp">--°</div>
+          <div class="desc" data-wx="desc">—</div>
+          <div class="meta" data-wx="meta">體感 — · 濕度 — · 風速 —</div>
+        </article>
+        <article class="weather-card" id="wx-osaka" data-city="osaka">
+          <div class="city">
+            <span>大阪 Osaka</span>
+            <span class="badge-near">較靠近你</span>
+          </div>
+          <div class="status" data-wx="status">載入中…</div>
+          <div class="temp" data-wx="temp">--°</div>
+          <div class="desc" data-wx="desc">—</div>
+          <div class="meta" data-wx="meta">體感 — · 濕度 — · 風速 —</div>
+        </article>
+      </div>
+
+      <div class="weather-actions">
+        <button type="button" id="wx-refresh">↻ 重新整理天氣</button>
+        <button type="button" id="wx-locate">📍 依我的位置判斷</button>
+        <a href="https://www.google.com/search?q=%E4%BA%AC%E9%83%BD+%E5%A4%A9%E6%B0%A3" target="_blank" rel="noopener noreferrer">京都天氣預報</a>
+        <a href="https://www.google.com/search?q=%E5%A4%A7%E9%98%AA+%E5%A4%A9%E6%B0%A3" target="_blank" rel="noopener noreferrer">大阪天氣預報</a>
+      </div>
+      <p class="weather-updated" id="wx-updated">資料來源：Open-Meteo · Asia/Tokyo</p>
+
+      <div class="vjw-card">
+        <div class="vjw-title">Visit Japan Web · 入境／通關出示</div>
+        <p>
+          抵達日本後可開啟此官方頁面，出示入境・海關・檢疫等事先登錄資料。<br />
+          建議加入手機主畫面或書籤，下機後離線前先開好。
+        </p>
+        <a
+          class="vjw-btn"
+          href="https://www.vjw.digital.go.jp/main/#/vjwplo001"
+          target="_blank"
+          rel="noopener noreferrer"
+        >開啟 Visit Japan Web</a>
+        <span class="vjw-url">https://www.vjw.digital.go.jp/main/#/vjwplo001</span>
+      </div>
+    </section>
+
     <footer class="footer">
       <p class="hand">Safe travels · 金運滿滿 · 寶寶開心</p>
       <p>京都大阪親子手繪行程 · 2026.8.3–8.8 · 專車直達版（含御金神社）</p>
+      <p class="footer-vjw">
+        <a href="https://www.vjw.digital.go.jp/main/#/vjwplo001" target="_blank" rel="noopener noreferrer">🛂 Visit Japan Web 入境出示</a>
+      </p>
       <p style="margin-top:0.5rem">
-        <a href="pocket-map.html" style="color:inherit">口袋地圖</a>
+        <a href="#utility">即時天氣</a>
         ·
-        <a href="itinerary.pptx" style="color:inherit">PPT 簡報</a>
+        <a href="pocket-map.html">口袋地圖</a>
         ·
-        <a href="itinerary.pdf" style="color:inherit">PDF</a>
+        <a href="itinerary.pptx">PPT 簡報</a>
+        ·
+        <a href="itinerary.pdf">PDF</a>
       </p>
       <p id="live-url" style="margin-top:0.35rem;opacity:0.75"></p>
     </footer>
@@ -1853,6 +2153,154 @@
             });
           });
         }
+
+        /* Weather: Kyoto / Osaka via Open-Meteo (no API key) */
+        var CITIES = {
+          kyoto: { name: "京都", lat: 35.0116, lon: 135.7681, el: document.getElementById("wx-kyoto") },
+          osaka: { name: "大阪", lat: 34.6937, lon: 135.5023, el: document.getElementById("wx-osaka") }
+        };
+
+        function wmoText(code) {
+          var map = {
+            0: "晴朗", 1: "大致晴朗", 2: "多雲", 3: "陰天",
+            45: "有霧", 48: "霧凇",
+            51: "毛毛雨", 53: "毛毛雨", 55: "強毛毛雨",
+            56: "凍毛毛雨", 57: "強凍毛毛雨",
+            61: "小雨", 63: "中雨", 65: "大雨",
+            66: "凍雨", 67: "強凍雨",
+            71: "小雪", 73: "中雪", 75: "大雪", 77: "雪粒",
+            80: "陣雨", 81: "中陣雨", 82: "強陣雨",
+            85: "陣雪", 86: "強陣雪",
+            95: "雷雨", 96: "雷雨伴冰雹", 99: "強雷雨伴冰雹"
+          };
+          return map[code] || ("天氣代碼 " + code);
+        }
+
+        function setCard(card, state) {
+          if (!card) return;
+          var status = card.querySelector('[data-wx="status"]');
+          var temp = card.querySelector('[data-wx="temp"]');
+          var desc = card.querySelector('[data-wx="desc"]');
+          var meta = card.querySelector('[data-wx="meta"]');
+          if (state.error) {
+            if (status) status.textContent = state.error;
+            if (temp) temp.textContent = "--°";
+            if (desc) desc.textContent = "—";
+            if (meta) meta.textContent = "請確認網路後重試";
+            return;
+          }
+          if (status) status.textContent = state.loading ? "載入中…" : "即時";
+          if (state.loading) return;
+          if (temp) temp.textContent = Math.round(state.temp) + "°";
+          if (desc) desc.textContent = state.desc;
+          if (meta) {
+            meta.textContent =
+              "體感 " + Math.round(state.feels) + "° · 濕度 " + state.humidity + "% · 風速 " +
+              Math.round(state.wind) + " km/h" +
+              (state.precip > 0 ? " · 降水 " + state.precip + " mm" : "");
+          }
+        }
+
+        function fetchCity(key) {
+          var c = CITIES[key];
+          if (!c || !c.el) return Promise.resolve();
+          setCard(c.el, { loading: true });
+          var url =
+            "https://api.open-meteo.com/v1/forecast?latitude=" + c.lat +
+            "&longitude=" + c.lon +
+            "&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m" +
+            "&timezone=Asia%2FTokyo";
+          return fetch(url)
+            .then(function (r) {
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.json();
+            })
+            .then(function (data) {
+              var cur = data.current || {};
+              setCard(c.el, {
+                temp: cur.temperature_2m,
+                feels: cur.apparent_temperature,
+                humidity: cur.relative_humidity_2m,
+                wind: cur.wind_speed_10m,
+                precip: cur.precipitation || 0,
+                desc: wmoText(cur.weather_code)
+              });
+            })
+            .catch(function () {
+              setCard(c.el, { error: "無法取得天氣" });
+            });
+        }
+
+        function refreshAll() {
+          var updated = document.getElementById("wx-updated");
+          var btn = document.getElementById("wx-refresh");
+          if (btn) btn.disabled = true;
+          return Promise.all([fetchCity("kyoto"), fetchCity("osaka")]).then(function () {
+            if (updated) {
+              var now = new Date();
+              updated.textContent =
+                "更新於 " + now.toLocaleString("zh-TW", { timeZone: "Asia/Tokyo", hour12: false }) +
+                "（日本時間）· Open-Meteo";
+            }
+            if (btn) btn.disabled = false;
+          });
+        }
+
+        function haversineKm(lat1, lon1, lat2, lon2) {
+          var R = 6371;
+          var toRad = function (d) { return d * Math.PI / 180; };
+          var dLat = toRad(lat2 - lat1);
+          var dLon = toRad(lon2 - lon1);
+          var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          return 2 * R * Math.asin(Math.sqrt(a));
+        }
+
+        function markNearest(lat, lon) {
+          var dK = haversineKm(lat, lon, CITIES.kyoto.lat, CITIES.kyoto.lon);
+          var dO = haversineKm(lat, lon, CITIES.osaka.lat, CITIES.osaka.lon);
+          var near = dK <= dO ? "kyoto" : "osaka";
+          Object.keys(CITIES).forEach(function (k) {
+            if (CITIES[k].el) CITIES[k].el.classList.toggle("is-near", k === near);
+          });
+          var updated = document.getElementById("wx-updated");
+          if (updated) {
+            updated.textContent =
+              "定位成功：距離京都約 " + dK.toFixed(1) + " km、大阪約 " + dO.toFixed(1) +
+              " km → 較靠近「" + CITIES[near].name + "」";
+          }
+        }
+
+        var refreshBtn = document.getElementById("wx-refresh");
+        var locateBtn = document.getElementById("wx-locate");
+        if (refreshBtn) refreshBtn.addEventListener("click", refreshAll);
+        if (locateBtn) {
+          locateBtn.addEventListener("click", function () {
+            if (!navigator.geolocation) {
+              alert("此裝置不支援定位。");
+              return;
+            }
+            locateBtn.disabled = true;
+            locateBtn.textContent = "定位中…";
+            navigator.geolocation.getCurrentPosition(
+              function (pos) {
+                markNearest(pos.coords.latitude, pos.coords.longitude);
+                locateBtn.disabled = false;
+                locateBtn.textContent = "📍 依我的位置判斷";
+              },
+              function () {
+                alert("無法取得定位，請在瀏覽器允許位置權限後再試。");
+                locateBtn.disabled = false;
+                locateBtn.textContent = "📍 依我的位置判斷";
+              },
+              { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000 }
+            );
+          });
+        }
+
+        refreshAll();
       })();
     </script>
   </div>
