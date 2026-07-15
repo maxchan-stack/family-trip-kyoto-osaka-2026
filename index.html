@@ -571,7 +571,7 @@
       border-radius: 999px;
     }
 
-    /* map sketch */
+    /* map sketch — Google Maps embed + pin legend */
     .map-sketch {
       margin-top: 1rem;
       padding: 1rem;
@@ -584,16 +584,158 @@
       font-family: "Caveat", cursive;
       font-size: 1.25rem;
       color: #9a7b1a;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.35rem;
       text-align: center;
     }
 
-    .map-sketch svg {
+    .map-sketch .map-sub {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.75rem;
+      line-height: 1.45;
+    }
+
+    .map-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+      margin-bottom: 0.7rem;
+    }
+
+    .map-tabs button {
+      appearance: none;
+      border: 1.5px solid rgba(154, 123, 26, 0.4);
+      background: rgba(255, 248, 235, 0.8);
+      color: var(--ink-soft);
+      font-family: "Klee One", serif;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+      min-height: 36px;
+      -webkit-tap-highlight-color: rgba(194, 59, 34, 0.12);
+    }
+
+    .map-tabs button.is-active {
+      background: #9a7b1a;
+      border-color: #9a7b1a;
+      color: #fff8eb;
+      font-weight: 600;
+    }
+
+    .map-frame {
+      position: relative;
       width: 100%;
-      max-width: 520px;
+      aspect-ratio: 16 / 11;
+      min-height: 240px;
+      max-height: 420px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid rgba(42, 34, 24, 0.14);
+      background: #e8e0d0;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);
+    }
+
+    .map-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .map-panel { display: none; }
+    .map-panel.is-active { display: block; }
+
+    .map-pins {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .map-pin {
       display: block;
-      margin: 0 auto;
-      height: auto;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(255, 248, 235, 0.9);
+      border: 1.5px solid rgba(42, 34, 24, 0.12);
+      border-radius: 8px;
+      padding: 0.55rem 0.65rem;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .map-pin:hover,
+    .map-pin:focus-visible {
+      border-color: #9a7b1a;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .map-pin .pin-label {
+      font-family: "Shippori Mincho", serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .map-pin .pin-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    .map-pin .pin-dot.gold { background: #c9a227; }
+    .map-pin .pin-dot.ink { background: #2a2218; }
+    .map-pin .pin-dot.water { background: #4a6b7c; }
+    .map-pin .pin-dot.sage { background: #6b7f5a; }
+
+    .map-pin .pin-meta {
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      margin-top: 0.2rem;
+      line-height: 1.4;
+      padding-left: 1rem;
+    }
+
+    .map-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: center;
+      margin-top: 0.75rem;
+    }
+
+    .map-actions a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      color: #4a6b7c;
+      border: 1.5px solid rgba(74, 107, 124, 0.35);
+      background: rgba(255,255,255,0.55);
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .map-actions a:hover {
+      background: #4a6b7c;
+      color: #fff;
+    }
+
+    .map-note {
+      margin-top: 0.65rem;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      text-align: center;
+      line-height: 1.45;
     }
 
     /* overview grid */
@@ -815,6 +957,13 @@
         grid-template-columns: repeat(6, 1fr);
       }
       .day-title-block h2 { font-size: 1.35rem; }
+      .map-pins {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .map-frame {
+        aspect-ratio: 16 / 9;
+        min-height: 320px;
+      }
     }
 
     /* ========== RESPONSIVE: Tablet ========== */
@@ -877,13 +1026,10 @@
         white-space: nowrap;
         font-size: 0.78rem;
       }
-      .map-sketch {
-        padding: 0.75rem;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .map-sketch svg {
-        min-width: 300px;
+      .map-sketch { padding: 0.75rem; }
+      .map-frame {
+        aspect-ratio: 4 / 3;
+        min-height: 260px;
       }
     }
 
@@ -1036,6 +1182,26 @@
       }
       .tip-box .tip-label { font-size: 1.05rem; }
       .tip-box p, .tip-box ul { font-size: 0.86rem; }
+
+      .map-sketch { padding: 0.7rem; }
+      .map-frame {
+        aspect-ratio: 1 / 1;
+        min-height: 280px;
+        max-height: none;
+      }
+      .map-pins {
+        grid-template-columns: 1fr;
+      }
+      .map-tabs button {
+        flex: 1 1 auto;
+        justify-content: center;
+        text-align: center;
+      }
+      .map-actions a {
+        flex: 1 1 auto;
+        justify-content: center;
+        text-align: center;
+      }
 
       .fab-toggle {
         width: 50px;
@@ -1354,36 +1520,80 @@
         </div>
       </div>
 
-      <div class="map-sketch">
-        <h3>✎ D2 地理空間速寫 · 中京區</h3>
-        <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
-          <!-- paper grid -->
-          <rect x="8" y="8" width="504" height="204" rx="6" fill="#fff9ef" stroke="#c9a227" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <!-- hotel -->
-          <rect x="360" y="150" width="100" height="40" rx="6" fill="#e8f0e4" stroke="#6b7f5a" stroke-width="2"/>
-          <text x="410" y="168" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="11" fill="#2a2218" font-weight="600">nol sanjo</text>
-          <text x="410" y="182" text-anchor="middle" font-family="Klee One, serif" font-size="9" fill="#5c4a38">下榻 · 中京</text>
-          <!-- mikane -->
-          <rect x="40" y="40" width="110" height="48" rx="6" fill="#fff3cc" stroke="#c9a227" stroke-width="2.5"/>
-          <text x="95" y="60" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="13" fill="#9a7b1a" font-weight="700">御金神社</text>
-          <text x="95" y="76" text-anchor="middle" font-family="Klee One, serif" font-size="9" fill="#5c4a38">金色鳥居 · 金運</text>
-          <!-- nijo -->
-          <rect x="200" y="30" width="120" height="55" rx="6" fill="#f5ebe0" stroke="#2a2218" stroke-width="2"/>
-          <text x="260" y="52" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="13" fill="#2a2218" font-weight="700">二条城</text>
-          <text x="260" y="70" text-anchor="middle" font-family="Klee One, serif" font-size="9" fill="#5c4a38">平整放電 · 晨間</text>
-          <!-- dashed walk -->
-          <path d="M150 64 Q175 55 200 55" fill="none" stroke="#c23b22" stroke-width="2" stroke-dasharray="5 4"/>
-          <text x="168" y="48" font-family="Caveat, cursive" font-size="14" fill="#c23b22" font-weight="700">≈500m</text>
-          <text x="165" y="88" font-family="Caveat, cursive" font-size="13" fill="#c23b22">walk 6–8min</text>
-          <!-- metro note -->
-          <text x="95" y="115" text-anchor="middle" font-family="Klee One, serif" font-size="10" fill="#4a6b7c">近 烏丸御池站</text>
-          <!-- arrow to hotel soft -->
-          <path d="M300 85 Q350 120 360 155" fill="none" stroke="#6b7f5a" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/>
-          <text x="340" y="120" font-family="Caveat, cursive" font-size="12" fill="#6b7f5a">同區很近</text>
-          <!-- legend -->
-          <text x="40" y="175" font-family="Caveat, cursive" font-size="15" fill="#9a7b1a">★ 清晨切入 · 避開排隊人潮</text>
-          <text x="40" y="195" font-family="Klee One, serif" font-size="10" fill="#5c4a38">推車停入口外圍 · 大人輪流抱嬰／揹帶快閃</text>
-        </svg>
+      <div class="map-sketch" id="d2-map">
+        <h3>✎ D2 地理空間 · Google 地圖概略</h3>
+        <p class="map-sub">
+          御金神社 ⇄ 二条城約 <strong>500m／步行 6–8 分</strong> · 與 nol sanjo 同中京區<br />
+          可拖曳／縮放；下方景點卡可一鍵開 Google 地圖
+        </p>
+
+        <div class="map-tabs" role="tablist" aria-label="地圖視圖切換">
+          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="walk">步行：御金 → 二条城</button>
+          <button type="button" role="tab" aria-selected="false" data-map-tab="area">區域：中京區概覽</button>
+          <button type="button" role="tab" aria-selected="false" data-map-tab="museum">京瓷美術館</button>
+        </div>
+
+        <div class="map-panel is-active" data-map-panel="walk" role="tabpanel">
+          <div class="map-frame">
+            <!-- 無需 API Key 的 Google Maps 步行路線嵌入（概略示意） -->
+            <iframe
+              title="Google 地圖：御金神社步行至二条城"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              src="https://maps.google.com/maps?saddr=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE%EF%BC%8C%E4%BA%AC%E9%83%BD%E5%B8%82%E4%B8%AD%E4%BA%AC%E5%8C%BA&daddr=%E4%BA%8C%E6%9D%A1%E5%9F%8E%EF%BC%8C%E4%BA%AC%E9%83%BD&dirflg=w&hl=zh-TW&z=16&output=embed"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="map-panel" data-map-panel="area" role="tabpanel" hidden>
+          <div class="map-frame">
+            <iframe
+              title="Google 地圖：京都中京區（御金神社周邊）"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              src="https://maps.google.com/maps?q=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE%EF%BC%8C%E4%BA%AC%E9%83%BD&hl=zh-TW&z=15&output=embed"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="map-panel" data-map-panel="museum" role="tabpanel" hidden>
+          <div class="map-frame">
+            <iframe
+              title="Google 地圖：京都京瓷美術館"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              src="https://maps.google.com/maps?q=%E4%BA%AC%E9%83%BD%E5%B8%82%E4%BA%AC%E3%82%BB%E3%83%A9%E7%BE%8E%E8%A1%93%E9%A4%A8&hl=zh-TW&z=15&output=embed"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="map-pins">
+          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE+%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener noreferrer">
+            <div class="pin-label"><span class="pin-dot gold"></span>御金神社</div>
+            <div class="pin-meta">金色鳥居 · 金運快閃 · 清晨切入</div>
+          </a>
+          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E4%BA%8C%E6%9D%A1%E5%9F%8E+%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener noreferrer">
+            <div class="pin-label"><span class="pin-dot ink"></span>二条城</div>
+            <div class="pin-meta">約 500m · 步行 6–8 分 · 晨間放電</div>
+          </a>
+          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%B8%82%E4%BA%AC%E3%82%BB%E3%83%A9%E7%BE%8E%E8%A1%93%E9%A4%A8" target="_blank" rel="noopener noreferrer">
+            <div class="pin-label"><span class="pin-dot water"></span>京瓷美術館</div>
+            <div class="pin-meta">計程車直達 · ENFUSE 午餐避暑</div>
+          </a>
+          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=nol+kyoto+sanjo" target="_blank" rel="noopener noreferrer">
+            <div class="pin-label"><span class="pin-dot sage"></span>nol kyoto sanjo</div>
+            <div class="pin-meta">下榻 · 同中京區 · 午後小睡基地</div>
+          </a>
+        </div>
+
+        <div class="map-actions">
+          <a href="https://www.google.com/maps/dir/?api=1&origin=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE+%E4%BA%AC%E9%83%BD&destination=%E4%BA%8C%E6%9D%A1%E5%9F%8E+%E4%BA%AC%E9%83%BD&travelmode=walking" target="_blank" rel="noopener noreferrer">在 Google 地圖開步行路線</a>
+          <a href="https://www.google.com/maps/dir/?api=1&origin=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE+%E4%BA%AC%E9%83%BD&destination=%E4%BA%AC%E9%83%BD%E5%B8%82%E4%BA%AC%E3%82%BB%E3%83%A9%E7%BE%8E%E8%A1%93%E9%A4%A8&waypoints=%E4%BA%8C%E6%9D%A1%E5%9F%8E+%E4%BA%AC%E9%83%BD&travelmode=driving" target="_blank" rel="noopener noreferrer">全日動線（含京瓷）</a>
+        </div>
+        <p class="map-note">★ 清晨切入避開排隊 · 推車停入口外圍 · 大人輪流抱嬰／揹帶快閃<br />地圖需連網載入；若 iframe 被封鎖，請用上方按鈕在 App／瀏覽器開啟。</p>
       </div>
 
       <div class="tip-box gold">
@@ -1601,25 +1811,48 @@
         var wrap = document.getElementById("fab-wrap");
         var toggle = document.getElementById("fab-toggle");
         var backdrop = document.getElementById("fab-backdrop");
-        if (!wrap || !toggle) return;
+        if (wrap && toggle) {
+          function setOpen(open) {
+            wrap.classList.toggle("is-open", open);
+            document.body.classList.toggle("fab-open", open);
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+            toggle.setAttribute("aria-label", open ? "關閉工具選單" : "開啟工具選單");
+          }
 
-        function setOpen(open) {
-          wrap.classList.toggle("is-open", open);
-          document.body.classList.toggle("fab-open", open);
-          toggle.setAttribute("aria-expanded", open ? "true" : "false");
-          toggle.setAttribute("aria-label", open ? "關閉工具選單" : "開啟工具選單");
+          toggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            setOpen(!wrap.classList.contains("is-open"));
+          });
+          if (backdrop) {
+            backdrop.addEventListener("click", function () { setOpen(false); });
+          }
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") setOpen(false);
+          });
         }
 
-        toggle.addEventListener("click", function (e) {
-          e.stopPropagation();
-          setOpen(!wrap.classList.contains("is-open"));
-        });
-        if (backdrop) {
-          backdrop.addEventListener("click", function () { setOpen(false); });
+        /* D2 Google Map tabs */
+        var mapRoot = document.getElementById("d2-map");
+        if (mapRoot) {
+          var tabs = mapRoot.querySelectorAll("[data-map-tab]");
+          var panels = mapRoot.querySelectorAll("[data-map-panel]");
+          tabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+              var id = tab.getAttribute("data-map-tab");
+              tabs.forEach(function (t) {
+                var on = t === tab;
+                t.classList.toggle("is-active", on);
+                t.setAttribute("aria-selected", on ? "true" : "false");
+              });
+              panels.forEach(function (p) {
+                var on = p.getAttribute("data-map-panel") === id;
+                p.classList.toggle("is-active", on);
+                if (on) p.removeAttribute("hidden");
+                else p.setAttribute("hidden", "");
+              });
+            });
+          });
         }
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") setOpen(false);
-        });
       })();
     </script>
   </div>
