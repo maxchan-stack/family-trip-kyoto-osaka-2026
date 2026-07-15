@@ -2,18 +2,18 @@
 
 專車直達版 · 含御金神社 · 幼兒友善動線
 
-## 線上瀏覽（可分享給家人朋友）
+## 線上瀏覽（可直接分享）
 
 | 項目 | 連結 |
 |------|------|
 | **手繪手帳網頁** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/ |
 | **可摺疊口袋地圖** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/pocket-map.html |
-| **PPT 簡報** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/京都大阪親子手繪行程.pptx |
-| **PDF 手帳** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/京都大阪親子手繪行程.pdf |
-| **口袋地圖 PDF** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/口袋地圖.pdf |
+| **PPT 簡報** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/itinerary.pptx |
+| **PDF 手帳** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/itinerary.pdf |
+| **口袋地圖 PDF** | https://maxchan-stack.github.io/family-trip-kyoto-osaka-2026/pocket-map.pdf |
 
 倉庫：https://github.com/maxchan-stack/family-trip-kyoto-osaka-2026
 
 ## 本地檔案
 
-桌面資料夾 `京都大阪親子手繪行程_202608` 內有相同內容。
+桌面資料夾 `京都大阪親子手繪行程_202608` 內有相同內容（含中文檔名副本）。
