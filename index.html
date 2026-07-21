@@ -13,22 +13,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Klee+One:wght@400;600&family=Noto+Serif+TC:wght@400;600;700&family=Shippori+Mincho:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --paper: #f3e6d0;
-      --paper-deep: #e8d4b5;
-      --ink: #2a2218;
-      --ink-soft: #5c4a38;
+      --paper: #ffffff;
+      --paper-deep: #f5f8f5;
+      --ink: #222a24;
+      --ink-soft: #4e5a52;
       --vermilion: #c23b22;
       --gold: #c9a227;
-      --gold-light: #e8c96a;
-      --sage: #6b7f5a;
-      --water: #4a6b7c;
+      --gold-light: #f3e6b2;
+      --sage: #5f7550;
+      --water: #3f6173;
       --rust: #c45c3e;
-      --washi-line: rgba(42, 34, 24, 0.12);
+      --washi-line: rgba(34, 42, 36, 0.08);
       --stamp: #b83a2a;
-      --shadow: rgba(42, 34, 24, 0.18);
-      --shadow-sm: 0 4px 12px rgba(42, 34, 24, 0.10);
-      --shadow-md: 0 10px 28px rgba(42, 34, 24, 0.16);
-      --shadow-lg: 0 20px 50px rgba(42, 34, 24, 0.22);
+      --shadow: rgba(34, 42, 36, 0.08);
+      --shadow-sm: 0 4px 14px rgba(34, 42, 36, 0.05);
+      --shadow-md: 0 8px 24px rgba(34, 42, 36, 0.07);
+      --shadow-lg: 0 16px 40px rgba(34, 42, 36, 0.09);
       --text-sm: 0.8rem;
     }
 
@@ -39,10 +39,11 @@
     body {
       font-family: "Klee One", "Noto Serif TC", serif;
       color: var(--ink);
-      background:
-        radial-gradient(ellipse at 20% 10%, #d4c4a8 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, #c9b896 0%, transparent 45%),
-        linear-gradient(165deg, #cbb892 0%, #b8a07a 40%, #a8906e 100%);
+      background-color: #f1f4f1;
+      background-image:
+        linear-gradient(rgba(40, 60, 48, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(40, 60, 48, 0.045) 1px, transparent 1px);
+      background-size: 16px 16px;
       min-height: 100vh;
       line-height: 1.65;
     }
@@ -53,7 +54,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.07;
+      opacity: 0.03;
       z-index: 9999;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
@@ -76,14 +77,14 @@
     .cover {
       position: relative;
       background:
-        linear-gradient(180deg, rgba(243,230,208,0.97) 0%, rgba(232,212,181,0.98) 100%);
+        linear-gradient(180deg, #ffffff 0%, #f7f9f7 100%);
       border-radius: 4px 12px 6px 10px;
       padding: 2.75rem 2rem 2.5rem;
       box-shadow:
-        0 1px 0 rgba(255,255,255,0.4) inset,
+        0 1px 0 rgba(255,255,255,0.8) inset,
         var(--shadow-lg),
-        4px 4px 0 rgba(42,34,24,0.06);
-      border: 2px solid rgba(42,34,24,0.15);
+        4px 4px 0 rgba(34,42,36,0.04);
+      border: 1.5px solid rgba(34,42,36,0.12);
       overflow: hidden;
       margin-bottom: 2rem;
       transform: rotate(-0.4deg);
