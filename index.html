@@ -288,6 +288,13 @@
       box-shadow: 0 3px 10px rgba(42,34,24,0.22);
     }
 
+    .day-nav .tab-btn[data-tab="d1"].is-active { background: var(--vermilion); color: #ffffff; border-color: var(--vermilion); }
+    .day-nav .tab-btn[data-tab="d2"].is-active { background: var(--gold); color: #ffffff; border-color: var(--gold); }
+    .day-nav .tab-btn[data-tab="d3"].is-active { background: var(--sage); color: #ffffff; border-color: var(--sage); }
+    .day-nav .tab-btn[data-tab="d4"].is-active { background: var(--water); color: #ffffff; border-color: var(--water); }
+    .day-nav .tab-btn[data-tab="d5"].is-active { background: var(--rust); color: #ffffff; border-color: var(--rust); }
+    .day-nav .tab-btn[data-tab="d6"].is-active { background: var(--ink-soft); color: #ffffff; border-color: var(--ink-soft); }
+
     .day-nav .tab-btn .tab-badge-today {
       font-size: 0.65rem;
       font-weight: 700;
@@ -297,27 +304,33 @@
       border-radius: 999px;
     }
 
-    /* Tab Panel Visibility */
+    /* Tab Panel Visibility & Day Theme Colors */
     .tab-panel {
       display: block;
+      position: relative;
     }
 
     .tab-panel:not(.is-active) {
       display: none !important;
     }
-      color: var(--vermilion);
-      outline: none;
-    }
+
+    /* Assign day theme color variables for panel & cards */
+    .tab-panel[data-panel="d1"], .day.d1 { --day-color: var(--vermilion); }
+    .tab-panel[data-panel="d2"], .day.d2 { --day-color: var(--gold); }
+    .tab-panel[data-panel="d3"], .day.d3 { --day-color: var(--sage); }
+    .tab-panel[data-panel="d4"], .day.d4 { --day-color: var(--water); }
+    .tab-panel[data-panel="d5"], .day.d5 { --day-color: var(--rust); }
+    .tab-panel[data-panel="d6"], .day.d6 { --day-color: var(--ink-soft); }
 
     /* ========== DAY CARD ========== */
     .day {
       background: var(--paper);
-      border-radius: 3px 10px 5px 8px;
-      padding: 1.75rem 1.5rem 1.85rem;
+      border-radius: 6px 12px 8px 10px;
+      padding: 1.75rem 1.5rem 1.85rem 1.75rem;
       margin-bottom: 1.75rem;
-      border: 2px solid rgba(42,34,24,0.14);
+      border: 1.5px solid rgba(34,42,36,0.12);
       box-shadow:
-        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 1px 0 rgba(255,255,255,0.8) inset,
         var(--shadow-md);
       position: relative;
       overflow: hidden;
@@ -327,7 +340,7 @@
     .day.is-today {
       border-color: var(--gold);
       box-shadow:
-        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 1px 0 rgba(255,255,255,0.8) inset,
         var(--shadow-md),
         0 0 0 3px rgba(201,162,39,0.28);
     }
@@ -335,9 +348,10 @@
     .overview { scroll-margin-top: 72px; }
     .utility { scroll-margin-top: 72px; }
 
-    .day:nth-child(odd) { transform: rotate(0.25deg); }
-    .day:nth-child(even) { transform: rotate(-0.2deg); }
+    .day:nth-child(odd) { transform: rotate(0.15deg); }
+    .day:nth-child(even) { transform: rotate(-0.15deg); }
 
+    /* Left Theme Dashed Line - Full Height Bleed */
     .day::before {
       content: "";
       position: absolute;
@@ -347,17 +361,12 @@
       width: 8px;
       background: repeating-linear-gradient(
         180deg,
-        var(--vermilion) 0 12px,
-        transparent 12px 18px
+        var(--day-color, var(--vermilion)) 0 14px,
+        transparent 14px 20px
       );
-      opacity: 0.75;
+      opacity: 0.9;
+      z-index: 2;
     }
-
-    .day.d2::before { background: repeating-linear-gradient(180deg, var(--gold) 0 12px, transparent 12px 18px); }
-    .day.d3::before { background: repeating-linear-gradient(180deg, var(--sage) 0 12px, transparent 12px 18px); }
-    .day.d4::before { background: repeating-linear-gradient(180deg, var(--water) 0 12px, transparent 12px 18px); }
-    .day.d5::before { background: repeating-linear-gradient(180deg, var(--rust) 0 12px, transparent 12px 18px); }
-    .day.d6::before { background: repeating-linear-gradient(180deg, var(--ink-soft) 0 12px, transparent 12px 18px); }
 
     .day-header {
       display: flex;
@@ -1471,12 +1480,33 @@
         min-height: 38px;
       }
 
-      .day {
-        padding: 1.2rem 0.95rem 1.3rem;
-        margin-bottom: 1.2rem;
-        border-radius: 10px;
+      /* Full-bleed left theme line indicator for mobile screens */
+      .tab-panel[data-panel^="d"]::before {
+        content: "";
+        position: absolute;
+        left: calc(-1 * max(0.85rem, env(safe-area-inset-left)));
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: repeating-linear-gradient(
+          180deg,
+          var(--day-color, var(--vermilion)) 0 14px,
+          transparent 14px 20px
+        );
+        border-radius: 0 4px 4px 0;
+        opacity: 0.85;
+        z-index: 20;
       }
-      .day::before { width: 5px; }
+
+      .day {
+        padding: 1.25rem 0.95rem 1.3rem 1.25rem;
+        margin-bottom: 1.2rem;
+        border-radius: 8px;
+      }
+      .day::before {
+        width: 6px;
+        opacity: 0.95;
+      }
       .day-header {
         padding-left: 0.45rem;
         margin-bottom: 0.9rem;
