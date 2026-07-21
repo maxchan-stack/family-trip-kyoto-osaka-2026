@@ -66,6 +66,8 @@
       padding-left: max(1.25rem, env(safe-area-inset-left));
       padding-right: max(1.25rem, env(safe-area-inset-right));
       padding-bottom: max(4rem, calc(3.5rem + env(safe-area-inset-bottom)));
+      perspective: 1200px;
+      perspective-origin: 50% 180px;
     }
 
     img, svg { max-width: 100%; height: auto; }
@@ -304,14 +306,56 @@
       border-radius: 999px;
     }
 
-    /* Tab Panel Visibility & Day Theme Colors */
+    /* Tab Panel Visibility & 3D Page Flip Transitions */
     .tab-panel {
       display: block;
       position: relative;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      will-change: transform, opacity, filter;
     }
 
     .tab-panel:not(.is-active) {
       display: none !important;
+    }
+
+    /* Page Flip Keyframe Animations */
+    @keyframes pageFlipForward {
+      0% {
+        opacity: 0.15;
+        transform: rotateY(-20deg) scale(0.96) translateX(14px);
+        transform-origin: left center;
+        filter: brightness(0.92);
+      }
+      100% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1) translateX(0);
+        transform-origin: left center;
+        filter: brightness(1);
+      }
+    }
+
+    @keyframes pageFlipBackward {
+      0% {
+        opacity: 0.15;
+        transform: rotateY(20deg) scale(0.96) translateX(-14px);
+        transform-origin: right center;
+        filter: brightness(0.92);
+      }
+      100% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1) translateX(0);
+        transform-origin: right center;
+        filter: brightness(1);
+      }
+    }
+
+    .tab-panel.flip-forward {
+      animation: pageFlipForward 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .tab-panel.flip-backward {
+      animation: pageFlipBackward 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     /* Assign day theme color variables for panel & cards */
@@ -2531,18 +2575,24 @@
           });
         });
 
-        /* ── Main Tab Panel Switching (Overview / D1 ~ D6 / Utility) ── */
+        /* ── Main Tab Panel Switching with 3D Page Flip Animation ── */
         (function () {
           var nav = document.getElementById("main-tab-nav");
           if (!nav) return;
           var btns = nav.querySelectorAll("[data-tab]");
           var panels = document.querySelectorAll("[data-panel]");
+          var TAB_ORDER = { "overview": 0, "d1": 1, "d2": 2, "d3": 3, "d4": 4, "d5": 5, "d6": 6, "utility": 7 };
+          var currentTabId = "overview";
 
           function activateTab(tabId, scrollUp) {
-            if (!tabId) return;
+            if (!tabId || tabId === currentTabId && document.querySelector('[data-panel="' + tabId + '"].is-active')) return;
             var targetBtn = nav.querySelector('[data-tab="' + tabId + '"]');
             var targetPanel = document.querySelector('[data-panel="' + tabId + '"]');
             if (!targetBtn || !targetPanel) return;
+
+            var prevOrder = TAB_ORDER[currentTabId] !== undefined ? TAB_ORDER[currentTabId] : 0;
+            var nextOrder = TAB_ORDER[tabId] !== undefined ? TAB_ORDER[tabId] : 0;
+            var isForward = nextOrder >= prevOrder;
 
             btns.forEach(function (b) {
               var active = b === targetBtn;
@@ -2552,8 +2602,18 @@
 
             panels.forEach(function (p) {
               var active = p === targetPanel;
+              p.classList.remove("flip-forward", "flip-backward");
               p.classList.toggle("is-active", active);
             });
+
+            // Trigger 3D Page Flip animation on target panel
+            void targetPanel.offsetWidth; // force reflow
+            targetPanel.classList.add(isForward ? "flip-forward" : "flip-backward");
+            setTimeout(function () {
+              targetPanel.classList.remove("flip-forward", "flip-backward");
+            }, 400);
+
+            currentTabId = tabId;
 
             if (history.replaceState) {
               history.replaceState(null, "", "#" + tabId);
