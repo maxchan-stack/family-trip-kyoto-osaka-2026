@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Klee+One:wght@400;600&family=Noto+Serif+TC:wght@400;600;700&family=Shippori+Mincho:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     :root {
       --paper: #f8faf7;
@@ -847,6 +849,84 @@
     .map-pin .pin-dot.water { background: var(--water); }
     .map-pin .pin-dot.rust { background: var(--rust); }
     .map-pin .pin-dot.ink { background: var(--ink-soft); }
+
+    /* Leaflet Custom Pin Markers & Popup Styling */
+    .map-frame-leaflet {
+      width: 100%;
+      height: 420px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(30, 42, 32, 0.15);
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(30, 42, 32, 0.08);
+      position: relative;
+      z-index: 1;
+      background: #eef2ec;
+    }
+
+    .custom-day-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pin-badge-marker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      color: #ffffff;
+      font-family: "Klee One", "Noto Serif TC", serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+      border: 1.8px solid #ffffff;
+      white-space: nowrap;
+      transform: translate(-50%, -100%);
+      transition: transform 0.18s ease;
+      cursor: pointer;
+    }
+
+    .pin-badge-marker:hover {
+      transform: translate(-50%, -110%) scale(1.08);
+      z-index: 999 !important;
+    }
+
+    .pin-badge-marker.d1 { background: var(--vermilion); }
+    .pin-badge-marker.d2 { background: var(--gold); }
+    .pin-badge-marker.d3 { background: var(--sage); }
+    .pin-badge-marker.d4 { background: var(--water); }
+    .pin-badge-marker.d5 { background: var(--rust); }
+    .pin-badge-marker.d6 { background: var(--ink-soft); }
+
+    .leaflet-popup-content-wrapper {
+      background: #f8faf7;
+      border-radius: 8px;
+      border: 1.5px solid rgba(30,42,32,0.15);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      padding: 0.2rem;
+      color: var(--ink);
+    }
+    .leaflet-popup-content {
+      margin: 0.65rem 0.85rem;
+      font-family: "Klee One", serif;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+    .leaflet-popup-content h4 {
+      font-family: "Shippori Mincho", serif;
+      font-size: 1.05rem;
+      color: var(--vermilion);
+      margin-bottom: 0.25rem;
+    }
+    .leaflet-popup-content a {
+      display: inline-block;
+      margin-top: 0.45rem;
+      font-size: 0.85rem;
+      color: var(--water);
+      text-decoration: underline;
+      font-weight: 600;
+    }
 
     .map-pin .pin-meta {
       font-size: 0.86rem;
@@ -1804,17 +1884,9 @@
           <button type="button" role="tab" aria-selected="false" data-map-tab="region-osaka">🎡 大阪 / 神戶區域全景 (D3 – D6)</button>
         </div>
 
-        <!-- KYOTO MASTER MAP -->
+        <!-- KYOTO MASTER MAP (LEAFLET) -->
         <div class="map-panel is-active" data-map-panel="region-kyoto" role="tabpanel">
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：京都區域全景"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=Kyoto+Sanjo+Daimaru+(nol+kyoto+sanjo,+Mikane-jinja+Shrine,+Daimaru+Kyoto)&hl=zh-TW&z=14&output=embed"
-            ></iframe>
-          </div>
+          <div class="map-frame-leaflet" id="map-kyoto"></div>
 
           <div class="map-pins">
             <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=nol+kyoto+sanjo" target="_blank" rel="noopener noreferrer">
@@ -1848,17 +1920,9 @@
           </div>
         </div>
 
-        <!-- OSAKA / KOBE MASTER MAP -->
+        <!-- OSAKA / KOBE MASTER MAP (LEAFLET) -->
         <div class="map-panel" data-map-panel="region-osaka" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：大阪神戶區域全景"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=OMO7+Osaka+(OMO7+Osaka,+Osaka+Aquarium+Kaiyukan,+Abeno+Harukas)&hl=zh-TW&z=11&output=embed"
-            ></iframe>
-          </div>
+          <div class="map-frame-leaflet" id="map-osaka"></div>
 
           <div class="map-pins">
             <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=OMO7+Osaka" target="_blank" rel="noopener noreferrer">
@@ -2496,27 +2560,106 @@
           }
         })();
 
-        /* Google Map tabs for all days (d1-map ~ d6-map) */
-        document.querySelectorAll(".map-sketch").forEach(function (mapRoot) {
-          var tabs = mapRoot.querySelectorAll("[data-map-tab]");
-          var panels = mapRoot.querySelectorAll("[data-map-panel]");
-          tabs.forEach(function (tab) {
+        /* Master Region Maps Switching (Kyoto / Osaka) & Leaflet Interactive Map */
+        (function () {
+          var masterSection = document.getElementById("master-maps");
+          if (!masterSection) return;
+
+          var mapTabs = masterSection.querySelectorAll("[data-map-tab]");
+          var mapPanels = masterSection.querySelectorAll("[data-map-panel]");
+
+          var kyotoMap, osakaMap;
+
+          function initLeaflet() {
+            if (typeof L === "undefined") return;
+
+            // 1. Kyoto Master Map
+            var kyotoEl = document.getElementById("map-kyoto");
+            if (kyotoEl && !kyotoMap) {
+              kyotoMap = L.map("map-kyoto", { scrollWheelZoom: false }).setView([35.0040, 135.7590], 14);
+              L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap & CartoDB'
+              }).addTo(kyotoMap);
+
+              // D1 Pins (Vermilion)
+              addPin(kyotoMap, [35.0094, 135.7608], "d1", "D1 · nol kyoto sanjo", "<strong>nol kyoto sanjo</strong><br/>京都下榻基地 · 三條通", "https://www.google.com/maps/search/?api=1&query=nol+kyoto+sanjo");
+              addPin(kyotoMap, [35.0118, 135.7554], "d1", "D1 · 御金神社", "<strong>御金神社</strong><br/>金色鳥居 · 金運快閃參拜", "https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE+%E4%BA%AC%E9%83%BD");
+              addPin(kyotoMap, [35.0084, 135.7645], "d1", "D1 · HUMAN MADE & LE LABO", "<strong>HUMAN MADE 1928 & LE LABO</strong><br/>藍瓶潮流咖啡與町家香氛", "https://www.google.com/maps/search/?api=1&query=HUMAN+MADE+1928+KYOTO");
+
+              // D2 Pins (Gold)
+              addPin(kyotoMap, [35.0037, 135.7628], "d2", "D2 · 大丸京都店 / 敘敘苑", "<strong>大丸京都店 & 敘敘苑燒肉</strong><br/>已預訂 12:30 · 寶可夢中心", "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E4%B8%B8+%E4%BA%AC%E9%83%BD%E5%BA%97");
+              addPin(kyotoMap, [34.9754, 135.7335], "d2", "D2 · 吉祥院天滿宮", "<strong>吉祥院天滿宮</strong><br/>菅原道真誕生地 · 智惠參拜", "https://www.google.com/maps/search/?api=1&query=%E5%90%89%E7%A5%A5%E9%99%A2%E5%A4%A9%E6%BA%80%E5%AE%AE");
+              addPin(kyotoMap, [35.0089, 135.7725], "d2", "D2 · 檀王法林寺", "<strong>檀王法林寺</strong><br/>日本最古主貓御守 · 鴨川畔", "https://www.google.com/maps/search/?api=1&query=%E6%AA%80%E7%8E%8B%E6%B3%95%E6%9E%97%E4%BA%AC%E9%83%BD");
+
+              // D3 Pin (Sage)
+              addPin(kyotoMap, [34.6515, 135.5030], "d3", "D3 · OMO7 Osaka", "<strong>OMO7 Osaka (星野飯店)</strong><br/>京都專車直達下榻基地", "https://www.google.com/maps/search/?api=1&query=OMO7+Osaka");
+            }
+
+            // 2. Osaka Master Map
+            var osakaEl = document.getElementById("map-osaka");
+            if (osakaEl && !osakaMap) {
+              osakaMap = L.map("map-osaka", { scrollWheelZoom: false }).setView([34.6550, 135.4550], 11);
+              L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap & CartoDB'
+              }).addTo(osakaMap);
+
+              // D3 Pin (Sage)
+              addPin(osakaMap, [34.6515, 135.5030], "d3", "D3 · OMO7 Osaka", "<strong>OMO7 Osaka (星野飯店)</strong><br/>數千坪私人大草皮公園", "https://www.google.com/maps/search/?api=1&query=OMO7+Osaka");
+
+              // D4 Pins (Water)
+              addPin(osakaMap, [34.6798, 135.1852], "d4", "D4 · 神戶麵包超人博物館", "<strong>神戶麵包超人兒童博物館</strong><br/>全室內冷氣放電 · 神戶港區", "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E3%82%A2%E3%83%B3%E3%83%91%E3%83%B3%E3%83%9E%E3%83%B3%E3%81%82%E3%81%9D%E3%81%B3%E3%81%AE%E3%81%8F%E3%81%AB");
+              addPin(osakaMap, [34.6460, 135.5135], "d4", "D4 · 阿倍野 Harukas / 阿卡將", "<strong>阿倍野 Harukas & 近鐵百貨 8F 阿卡將</strong><br/>高空夜景與母嬰購物", "https://www.google.com/maps/search/?api=1&query=%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AF%E3%82%B9");
+
+              // D5 Pins (Rust)
+              addPin(osakaMap, [34.6545, 135.4290], "d5", "D5 · 天保山海遊館", "<strong>天保山海遊館</strong><br/>看鯨鯊 · 全室內恆溫展館", "https://www.google.com/maps/search/?api=1&query=Osaka+Aquarium+Kaiyukan");
+
+              // D6 Pin (Ink)
+              addPin(osakaMap, [34.4320, 135.2304], "d6", "D6 · 關西國際機場 (KIX)", "<strong>關西國際機場 (KIX)</strong><br/>專車直達航廈 · 星宇 JX821 返台", "https://www.google.com/maps/search/?api=1&query=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF");
+            }
+          }
+
+          function addPin(map, coords, dayClass, title, popupText, gmapUrl) {
+            var iconHtml = '<div class="pin-badge-marker ' + dayClass + '">' + title + '</div>';
+            var customIcon = L.divIcon({
+              className: 'custom-day-pin',
+              html: iconHtml,
+              iconSize: [0, 0],
+              iconAnchor: [0, 0]
+            });
+
+            var marker = L.marker(coords, { icon: customIcon }).addTo(map);
+            var content = '<h4>' + title + '</h4><p>' + popupText + '</p><a href="' + gmapUrl + '" target="_blank" rel="noopener noreferrer">在 Google 地圖開啟 ➔</a>';
+            marker.bindPopup(content);
+          }
+
+          mapTabs.forEach(function (tab) {
             tab.addEventListener("click", function () {
-              var id = tab.getAttribute("data-map-tab");
-              tabs.forEach(function (t) {
-                var on = t === tab;
-                t.classList.toggle("is-active", on);
-                t.setAttribute("aria-selected", on ? "true" : "false");
+              var targetId = tab.getAttribute("data-map-tab");
+              mapTabs.forEach(function (t) {
+                var active = t === tab;
+                t.classList.toggle("is-active", active);
+                t.setAttribute("aria-selected", active ? "true" : "false");
               });
-              panels.forEach(function (p) {
-                var on = p.getAttribute("data-map-panel") === id;
-                p.classList.toggle("is-active", on);
-                if (on) p.removeAttribute("hidden");
+
+              mapPanels.forEach(function (p) {
+                var active = p.getAttribute("data-map-panel") === targetId;
+                p.classList.toggle("is-active", active);
+                if (active) p.removeAttribute("hidden");
                 else p.setAttribute("hidden", "");
               });
+
+              setTimeout(function () {
+                if (targetId === "region-kyoto" && kyotoMap) kyotoMap.invalidateSize();
+                if (targetId === "region-osaka" && osakaMap) osakaMap.invalidateSize();
+              }, 120);
             });
           });
-        });
+
+          // Delayed init to guarantee DOM render
+          setTimeout(initLeaflet, 250);
+        })();
 
         /* Weather: Kyoto / Osaka via Open-Meteo (no API key) */
         var CITIES = {
