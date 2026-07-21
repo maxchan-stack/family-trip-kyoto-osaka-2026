@@ -274,7 +274,19 @@
         0 12px 32px var(--shadow);
       position: relative;
       overflow: hidden;
+      scroll-margin-top: 72px;
     }
+
+    .day.is-today {
+      border-color: var(--gold);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 12px 32px var(--shadow),
+        0 0 0 3px rgba(201,162,39,0.28);
+    }
+
+    .overview { scroll-margin-top: 72px; }
+    .utility { scroll-margin-top: 72px; }
 
     .day:nth-child(odd) { transform: rotate(0.25deg); }
     .day:nth-child(even) { transform: rotate(-0.2deg); }
@@ -508,6 +520,22 @@
       background: rgba(255,255,255,0.4);
       border-radius: 10px;
       border: 1.5px dashed rgba(154,123,26,0.4);
+      position: relative;
+    }
+
+    .route-flow::before {
+      content: "動線路線";
+      position: absolute;
+      top: -0.6rem;
+      left: 1rem;
+      font-family: "Caveat", cursive;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #9a7b1a;
+      background: rgba(255,248,235,0.95);
+      padding: 0.05rem 0.5rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
     }
 
     .route-node {
@@ -586,6 +614,35 @@
       color: #9a7b1a;
       margin-bottom: 0.35rem;
       text-align: center;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .map-sketch h3 .map-toggle-icon {
+      font-size: 0.85rem;
+      transition: transform 0.22s ease;
+      display: inline-block;
+    }
+
+    .map-sketch.is-collapsed h3 .map-toggle-icon {
+      transform: rotate(-90deg);
+    }
+
+    .map-sketch .map-body {
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.25s ease;
+      max-height: 2000px;
+      opacity: 1;
+    }
+
+    .map-sketch.is-collapsed .map-body {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .map-sketch .map-sub {
@@ -1121,7 +1178,6 @@
 
     .fab-wrap.is-open .fab-toggle {
       background: var(--vermilion);
-      transform: rotate(45deg);
     }
 
     .fab-toggle svg {
@@ -1129,6 +1185,12 @@
       height: 22px;
       display: block;
     }
+
+    /* Hide the + icon lines when open (show X) and menu icon when closed */
+    .fab-toggle .icon-menu { display: block; }
+    .fab-toggle .icon-close { display: none; }
+    .fab-wrap.is-open .fab-toggle .icon-menu { display: none; }
+    .fab-wrap.is-open .fab-toggle .icon-close { display: block; }
 
     .fab-backdrop {
       position: fixed;
@@ -1225,6 +1287,11 @@
         align-items: stretch;
         gap: 0;
         padding: 0.75rem;
+        border-left: 4px solid rgba(154,123,26,0.5);
+        border-top: 1.5px dashed rgba(154,123,26,0.4);
+        border-right: 1.5px dashed rgba(154,123,26,0.4);
+        border-bottom: 1.5px dashed rgba(154,123,26,0.4);
+        border-radius: 0 10px 10px 10px;
       }
       .route-node {
         width: 100%;
@@ -1508,10 +1575,13 @@
       aria-expanded="false"
       aria-controls="fab-menu"
       aria-label="開啟工具選單"
-      title="工具"
+      title="工具選單"
     >
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
       </svg>
     </button>
   </div>
@@ -1542,11 +1612,13 @@
           <path d="M28 40 Q40 48 52 40" stroke="#c23b22" stroke-width="2" stroke-linecap="round" fill="none"/>
           <circle cx="40" cy="52" r="3" fill="#c9a227"/>
         </svg>
-        <!-- castle -->
+        <!-- omamori charm (御守) — replaces removed castle -->
         <svg viewBox="0 0 80 80" fill="none">
-          <path d="M16 58 H64 V48 H52 V38 H64 V28 H48 L40 18 L32 28 H16 V38 H28 V48 H16 Z" stroke="#2a2218" stroke-width="2.2" stroke-linejoin="round"/>
-          <path d="M36 48 V38 H44 V48" stroke="#2a2218" stroke-width="2"/>
-          <circle cx="40" cy="24" r="2.5" fill="#c23b22"/>
+          <rect x="26" y="18" width="28" height="36" rx="14" stroke="#9a7b1a" stroke-width="2.2" fill="rgba(201,162,39,0.12)"/>
+          <line x1="40" y1="18" x2="40" y2="14" stroke="#9a7b1a" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="40" cy="12" r="3" stroke="#9a7b1a" stroke-width="2" fill="rgba(201,162,39,0.2)"/>
+          <path d="M32 54 L36 64 L40 60 L44 64 L48 54" stroke="#9a7b1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <text x="40" y="42" text-anchor="middle" font-size="13" font-family="serif" fill="#9a7b1a" font-weight="700">御守</text>
         </svg>
         <!-- whale shark -->
         <svg viewBox="0 0 80 80" fill="none">
@@ -2335,6 +2407,77 @@
             if (e.key === "Escape") setOpen(false);
           });
         }
+
+        /* ── Map Sketch Accordion (collapsible on tap of h3) ── */
+        document.querySelectorAll(".map-sketch").forEach(function (sketch) {
+          var h3 = sketch.querySelector("h3");
+          if (!h3) return;
+
+          // Wrap all content after h3 in a .map-body div
+          var body = sketch.querySelector(".map-body");
+          if (!body) {
+            body = document.createElement("div");
+            body.className = "map-body";
+            var children = Array.prototype.slice.call(sketch.childNodes);
+            children.forEach(function (node) {
+              if (node !== h3) body.appendChild(node);
+            });
+            sketch.appendChild(body);
+          }
+
+          // Add toggle icon to h3
+          var icon = document.createElement("span");
+          icon.className = "map-toggle-icon";
+          icon.setAttribute("aria-hidden", "true");
+          icon.textContent = "▾";
+          h3.appendChild(icon);
+
+          h3.setAttribute("role", "button");
+          h3.setAttribute("tabindex", "0");
+          h3.setAttribute("aria-expanded", "true");
+
+          function toggleMap() {
+            var collapsed = sketch.classList.toggle("is-collapsed");
+            h3.setAttribute("aria-expanded", collapsed ? "false" : "true");
+          }
+
+          h3.addEventListener("click", toggleMap);
+          h3.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleMap(); }
+          });
+        });
+
+        /* ── Today Highlight: auto-detect current travel day ── */
+        (function () {
+          var START = new Date("2026-08-03T00:00:00+09:00");
+          var END   = new Date("2026-08-08T23:59:59+09:00");
+          var now   = new Date();
+          if (now < START || now > END) return; // not during trip, skip
+
+          var dayIndex = Math.floor((now - START) / 86400000); // 0-based
+          var dayIds = ["d1", "d2", "d3", "d4", "d5", "d6"];
+          var todayId = dayIds[dayIndex];
+          if (!todayId) return;
+
+          var todayEl = document.getElementById(todayId);
+          if (!todayEl) return;
+
+          todayEl.classList.add("is-today");
+
+          // Insert "今天" badge into day header
+          var badge = todayEl.querySelector(".day-badge");
+          if (badge) {
+            var chip = document.createElement("span");
+            chip.style.cssText = "display:inline-block;font-size:0.68rem;font-weight:700;background:var(--gold);color:#fff8eb;border-radius:999px;padding:0.12rem 0.5rem;margin-left:0.5rem;vertical-align:middle;font-family:'Klee One',serif;";
+            chip.textContent = "TODAY";
+            badge.appendChild(chip);
+          }
+
+          // Auto-scroll to today's day card after a short delay
+          setTimeout(function () {
+            todayEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 600);
+        })();
 
         /* Google Map tabs for all days (d1-map ~ d6-map) */
         document.querySelectorAll(".map-sketch").forEach(function (mapRoot) {
