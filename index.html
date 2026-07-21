@@ -841,10 +841,12 @@
       flex: 0 0 auto;
     }
 
-    .map-pin .pin-dot.gold { background: #c9a227; }
-    .map-pin .pin-dot.ink { background: #2a2218; }
-    .map-pin .pin-dot.water { background: #4a6b7c; }
-    .map-pin .pin-dot.sage { background: #6b7f5a; }
+    .map-pin .pin-dot.vermilion { background: var(--vermilion); }
+    .map-pin .pin-dot.gold { background: var(--gold); }
+    .map-pin .pin-dot.sage { background: var(--sage); }
+    .map-pin .pin-dot.water { background: var(--water); }
+    .map-pin .pin-dot.rust { background: var(--rust); }
+    .map-pin .pin-dot.ink { background: var(--ink-soft); }
 
     .map-pin .pin-meta {
       font-size: 0.86rem;
@@ -1753,7 +1755,7 @@
         <a href="itinerary.pdf">📄 下載 PDF</a>
       </div>
 
-      <!-- OVERVIEW -->
+      <!-- OVERVIEW (6-DAY SUMMARY & MASTER REGION MAPS) -->
       <section class="overview">
         <h2>✦ 六日一覽地圖 ✦</h2>
         <div class="ov-grid">
@@ -1787,6 +1789,103 @@
             <div class="h">專車返台</div>
             <div class="c">OMO7 → KIX<br />JX821 13:15</div>
           </a>
+        </div>
+      </section>
+
+      <!-- MASTER REGION MAPS (KYOTO & OSAKA) -->
+      <section class="overview" id="master-maps" style="margin-top:1.5rem">
+        <h2>✦ 京都 · 大阪 雙區全景大地圖 ✦</h2>
+        <p class="map-sub" style="text-align:center;font-size:0.92rem;color:var(--ink-soft);margin-bottom:1.1rem;line-height:1.5">
+          跨天數全域地圖 · 依彩色大頭針快速識別各日景點分佈與交通範圍
+        </p>
+
+        <div class="map-tabs" role="tablist" aria-label="全景區域地圖切換">
+          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="region-kyoto">🏯 京都區域全景 (D1 – D3)</button>
+          <button type="button" role="tab" aria-selected="false" data-map-tab="region-osaka">🎡 大阪 / 神戶區域全景 (D3 – D6)</button>
+        </div>
+
+        <!-- KYOTO MASTER MAP -->
+        <div class="map-panel is-active" data-map-panel="region-kyoto" role="tabpanel">
+          <div class="map-frame">
+            <iframe
+              title="Google 地圖：京都區域全景"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              src="https://maps.google.com/maps?q=Kyoto+Sanjo+Daimaru+(nol+kyoto+sanjo,+Mikane-jinja+Shrine,+Daimaru+Kyoto)&hl=zh-TW&z=14&output=embed"
+            ></iframe>
+          </div>
+
+          <div class="map-pins">
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=nol+kyoto+sanjo" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot vermilion"></span>D1 · nol kyoto sanjo</div>
+              <div class="pin-meta">京都下榻基地 · 三條通</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE+%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot vermilion"></span>D1 · 御金神社</div>
+              <div class="pin-meta">金運參拜 · 計程車 5 分</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=HUMAN+MADE+1928+Cafe+by+Blue+Bottle+Coffee" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot vermilion"></span>D1 · HUMAN MADE & LE LABO</div>
+              <div class="pin-meta">潮流咖啡與香氛 · 距飯店 350m</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E4%B8%B8+%E4%BA%AC%E9%83%BD%E5%BA%97" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot gold"></span>D2 · 大丸京都店 / 敘敘苑</div>
+              <div class="pin-meta">頂級燒肉午餐 · 精品百貨購物</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%90%89%E7%A5%A5%E9%99%A2%E5%A4%A9%E6%BA%80%E5%AE%AE" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot gold"></span>D2 · 吉祥院天滿宮</div>
+              <div class="pin-meta">智惠學問參拜 · 專車接駁</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E6%AA%80%E7%8E%8B%E6%B3%95%E6%9E%97%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot gold"></span>D2 · 檀王法林寺</div>
+              <div class="pin-meta">日本最古主貓御守 · 鴨川畔</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=OMO7+Osaka" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot sage"></span>D3 · 京都轉進大阪 OMO7</div>
+              <div class="pin-meta">專車點對點飯店直達</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- OSAKA / KOBE MASTER MAP -->
+        <div class="map-panel" data-map-panel="region-osaka" role="tabpanel" hidden>
+          <div class="map-frame">
+            <iframe
+              title="Google 地圖：大阪神戶區域全景"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              src="https://maps.google.com/maps?q=OMO7+Osaka+(OMO7+Osaka,+Osaka+Aquarium+Kaiyukan,+Abeno+Harukas)&hl=zh-TW&z=11&output=embed"
+            ></iframe>
+          </div>
+
+          <div class="map-pins">
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=OMO7+Osaka" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot sage"></span>D3 · OMO7 Osaka (星野)</div>
+              <div class="pin-meta">大阪下榻 · 數千坪私人大草皮</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E3%82%A2%E3%83%B3%E3%83%91%E3%83%B3%E3%83%9E%E3%83%B3%E3%81%82%E3%81%9D%E3%81%B3%E3%81%AE%E3%81%8F%E3%81%AB" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot water"></span>D4 · 神戶麵包超人博物館</div>
+              <div class="pin-meta">全室內冷氣放電 · 神戶港區</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AF%E3%82%B9" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot water"></span>D4 · 阿倍野 Harukas / 阿卡將</div>
+              <div class="pin-meta">高空夜景 · 近鐵百貨 8F 阿卡將</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=Osaka+Aquarium+Kaiyukan" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot rust"></span>D5 · 天保山海遊館</div>
+              <div class="pin-meta">看鯨鯊 · 全室內恆溫避暑</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=OMO7+Osaka" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot rust"></span>D5 · OMO7 草皮公園散步</div>
+              <div class="pin-meta">傍晚涼風放電 · 天王寺在地晚餐</div>
+            </a>
+            <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF" target="_blank" rel="noopener noreferrer">
+              <div class="pin-label"><span class="pin-dot ink"></span>D6 · 關西國際機場 (KIX)</div>
+              <div class="pin-meta">專車直達航廈 · 星宇 JX821 返台</div>
+            </a>
+          </div>
         </div>
       </section>
     </div><!-- END OVERVIEW TAB PANEL -->
@@ -1850,62 +1949,6 @@
           <div class="time">17:30 之後</div>
           <div class="place">三條商圈 · 質感超市採購與晚餐</div>
           <p class="desc">於三條通周邊超市採購鮮乳與幼兒物資，享用京都第一餐。</p>
-        </div>
-      </div>
-
-      <div class="map-sketch" id="d1-map">
-        <h3>✎ D1 地理空間 · Google 地圖概略</h3>
-        <p class="map-sub">
-          nol kyoto sanjo ⇄ 御金神社約 <strong>1.1 km / 計程車 5 分</strong> · 離 HUMAN MADE 1928 僅 <strong>350m</strong><br />
-          可拖曳／縮放；下方景點卡可一鍵開 Google 地圖
-        </p>
-
-        <div class="map-tabs" role="tablist" aria-label="D1 地圖視圖切換">
-          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="d1-walk">三條通與御金神社散步圈</button>
-          <button type="button" role="tab" aria-selected="false" data-map-tab="d1-car">專車：KIX → nol kyoto sanjo</button>
-        </div>
-
-        <div class="map-panel is-active" data-map-panel="d1-walk" role="tabpanel">
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：京都中京區散步圈"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE%EF%BC%8C%E4%BA%AC%E9%83%BD&hl=zh-TW&z=15&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-panel" data-map-panel="d1-car" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：關西機場至京都"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?saddr=%E9%96%A2%E8%A5%BF%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&daddr=nol+kyoto+sanjo&dirflg=d&hl=zh-TW&z=10&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-pins">
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E9%87%91%E7%A5%9E%E7%A4%BE+%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot gold"></span>御金神社</div>
-            <div class="pin-meta">金色鳥居 · 金運快閃 · 計程車 5 分</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=HUMAN+MADE+1928+Cafe+by+Blue+Bottle+Coffee" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot ink"></span>HUMAN MADE 1928</div>
-            <div class="pin-meta">藍瓶咖啡合作店 · 距飯店 350m</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=LE+LABO+KYOTO" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot water"></span>LE LABO KYOTO</div>
-            <div class="pin-meta">町家香氛門市 · 距飯店 300m</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=nol+kyoto+sanjo" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot sage"></span>nol kyoto sanjo</div>
-            <div class="pin-meta">京都下榻 · 中京區核心基地</div>
-          </a>
         </div>
       </div>
 
@@ -2034,79 +2077,6 @@
         </div>
       </div>
 
-      <div class="map-sketch" id="d2-map">
-        <h3>✎ D2 地理空間 · Google 地圖概略</h3>
-        <p class="map-sub">
-          大丸京都店 ⇄ 敘敘苑步行 <strong>2 分</strong> · 吉祥院天滿宮位於京都南區 · 檀王法林寺位於三條鴨川旁<br />
-          可拖曳／縮放；下方景點卡可一鍵開 Google 地圖
-        </p>
-
-        <div class="map-tabs" role="tablist" aria-label="D2 地圖視圖切換">
-          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="d2-shijo">四條烏丸核心圈（大丸·敘敘苑）</button>
-          <button type="button" role="tab" aria-selected="false" data-map-tab="d2-tenmangu">吉祥院天滿宮（計程車）</button>
-          <button type="button" role="tab" aria-selected="false" data-map-tab="d2-danno">檀王法林寺（黑招財貓）</button>
-        </div>
-
-        <div class="map-panel is-active" data-map-panel="d2-shijo" role="tabpanel">
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：四條烏丸區（大丸京都店與敘敘苑）"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=%E5%A4%A7%E4%B8%B8%E4%BA%AC%E9%83%BD%E5%BA%97&hl=zh-TW&z=16&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-panel" data-map-panel="d2-tenmangu" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：吉祥院天滿宮"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=%E5%90%89%E7%A5%A5%E9%99%A2%E5%A4%A9%E6%BA%80%E5%AE%AE&hl=zh-TW&z=15&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-panel" data-map-panel="d2-danno" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：檀王法林寺"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=%E6%AA%80%E7%8E%8B%E6%B3%95%E6%9E%97%E4%BA%AC%E9%83%BD&hl=zh-TW&z=16&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-pins">
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E4%B8%B8%E4%BA%AC%E9%83%BD%E5%BA%97" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot water"></span>大丸京都店</div>
-            <div class="pin-meta">寶可夢中心 · 育嬰室 · 10:00開店</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E6%8F%99%E6%8F%99%E8%8B%91+%E5%9B%9B%E6%9D%A1%E7%83%8F%E4%B8%B8%E5%BA%97" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot gold"></span>敘敘苑 四條烏丸店</div>
-            <div class="pin-meta">已預訂 12:30 · 頂級燒肉午餐</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E5%90%89%E7%A5%A5%E9%99%A2%E5%A4%A9%E6%BA%80%E5%AE%AE" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot ink"></span>吉祥院天滿宮</div>
-            <div class="pin-meta">菅原道真誕生地 · 計程車 18 分</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E6%AA%80%E7%8E%8B%E6%B3%95%E6%9E%97%E4%BA%AC%E9%83%BD" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot sage"></span>檀王法林寺</div>
-            <div class="pin-meta">黑招財貓御守 · 17:00 前完成</div>
-          </a>
-        </div>
-
-        <div class="map-actions">
-          <a href="https://www.google.com/maps/dir/?api=1&origin=%E5%A4%A7%E4%B8%B8%E4%BA%AC%E9%83%BD%E5%BA%97&destination=%E5%90%89%E7%A5%A5%E9%99%A2%E5%A4%A9%E6%BA%80%E5%AE%AE&travelmode=driving" target="_blank" rel="noopener noreferrer">在 Google 地圖開敘敘苑至天滿宮路線</a>
-        </div>
-      </div>
-
       <div class="tip-box gold">
         <div class="tip-label">✎ D2 時間線備忘</div>
         <ul>
@@ -2161,49 +2131,6 @@
         </div>
       </div>
 
-      <div class="map-sketch" id="d3-map">
-        <h3>✎ D3 地理空間 · Google 地圖概略</h3>
-        <p class="map-sub">
-          京都 nol kyoto sanjo ⇄ 大阪 OMO7 Osaka 約 <strong>55 km / 專車直達 60 分</strong><br />
-          可拖曳／縮放；下方景點卡可一鍵開 Google 地圖
-        </p>
-
-        <div class="map-tabs" role="tablist" aria-label="D3 地圖視圖切換">
-          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="d3-car">專車路線（京都 → 大阪）</button>
-          <button type="button" role="tab" aria-selected="false" data-map-tab="d3-omo">OMO7 園區概覽</button>
-        </div>
-
-        <div class="map-panel is-active" data-map-panel="d3-car" role="tabpanel">
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：京都至大阪 OMO7"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?saddr=nol+kyoto+sanjo&daddr=OMO7+Osaka&dirflg=d&hl=zh-TW&z=10&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-panel" data-map-panel="d3-omo" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：OMO7 Osaka 周邊"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=OMO7+Osaka&hl=zh-TW&z=15&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-pins">
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=OMO7+Osaka" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot sage"></span>OMO7 Osaka</div>
-            <div class="pin-meta">大阪下榻 · 私人大草皮公園</div>
-          </a>
-        </div>
-      </div>
     </article>
   </div><!-- END panel-d3 -->
 
@@ -2245,53 +2172,6 @@
         </div>
       </div>
 
-      <div class="map-sketch" id="d4-map">
-        <h3>✎ D4 地理空間 · Google 地圖概略</h3>
-        <p class="map-sub">
-          神戶麵包超人博物館 ⇄ OMO7 Osaka 車程約 <strong>35 分</strong> · 近鐵百貨位於天王寺站<br />
-          可拖曳／縮放；下方景點卡可一鍵開 Google 地圖
-        </p>
-
-        <div class="map-tabs" role="tablist" aria-label="D4 地圖視圖切換">
-          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="d4-kobe">神戶麵包超人博物館</button>
-          <button type="button" role="tab" aria-selected="false" data-map-tab="d4-harukas">天王寺 Harukas / 近鐵百貨</button>
-        </div>
-
-        <div class="map-panel is-active" data-map-panel="d4-kobe" role="tabpanel">
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：神戶麵包超人兒童博物館"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=%E7%A5%9E%E6%88%B8%E3%82%A2%E3%83%B3%E3%83%91%E3%83%B3%E3%83%9E%E3%83%B3%E3%81%82%E3%81%9D%E3%81%B3%E3%81%AE%E3%81%8F%E3%81%AB&hl=zh-TW&z=15&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-panel" data-map-panel="d4-harukas" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：阿倍野 Harukas"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AF%E3%82%B9&hl=zh-TW&z=16&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-pins">
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E6%88%B8%E3%82%A2%E3%83%B3%E3%83%91%E3%83%B3%E3%83%9E%E3%83%B3%E3%81%82%E3%81%9D%E3%81%B3%E3%81%AE%E3%81%8F%E3%81%AB" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot water"></span>麵包超人博物館</div>
-            <div class="pin-meta">全室內冷氣 · 高放電效率</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=%E3%81%82%E3%81%B9%E3%81%AE%E3%83%8F%E3%83%AB%E3%82%AF%E3%82%B9" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot gold"></span>阿倍野 Harukas</div>
-            <div class="pin-meta">高空夜景 · 近鐵百貨 8F 阿卡將</div>
-          </a>
-        </div>
-      </div>
     </article>
   </div><!-- END panel-d4 -->
 
@@ -2328,53 +2208,6 @@
         </div>
       </div>
 
-      <div class="map-sketch" id="d5-map">
-        <h3>✎ D5 地理空間 · Google 地圖概略</h3>
-        <p class="map-sub">
-          天保山海遊館位於大阪港區 · OMO7 位於新今宮/天王寺圈<br />
-          可拖曳／縮放；下方景點卡可一鍵開 Google 地圖
-        </p>
-
-        <div class="map-tabs" role="tablist" aria-label="D5 地圖視圖切換">
-          <button type="button" class="is-active" role="tab" aria-selected="true" data-map-tab="d5-kaiyukan">天保山海遊館</button>
-          <button type="button" role="tab" aria-selected="false" data-map-tab="d5-omo7">OMO7 Osaka 大草皮</button>
-        </div>
-
-        <div class="map-panel is-active" data-map-panel="d5-kaiyukan" role="tabpanel">
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：天保山海遊館"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=Osaka+Aquarium+Kaiyukan&hl=zh-TW&z=15&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-panel" data-map-panel="d5-omo7" role="tabpanel" hidden>
-          <div class="map-frame">
-            <iframe
-              title="Google 地圖：OMO7 Osaka"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://maps.google.com/maps?q=OMO7+Osaka&hl=zh-TW&z=16&output=embed"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="map-pins">
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=Osaka+Aquarium+Kaiyukan" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot water"></span>天保山海遊館</div>
-            <div class="pin-meta">大阪港 · 鯨鯊恆溫展館</div>
-          </a>
-          <a class="map-pin" href="https://www.google.com/maps/search/?api=1&query=OMO7+Osaka" target="_blank" rel="noopener noreferrer">
-            <div class="pin-label"><span class="pin-dot sage"></span>OMO7 Osaka</div>
-            <div class="pin-meta">大草皮公園 · 涼風散步</div>
-          </a>
-        </div>
-      </div>
     </article>
   </div><!-- END panel-d5 -->
 
