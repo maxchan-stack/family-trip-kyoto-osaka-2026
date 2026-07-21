@@ -602,6 +602,37 @@
 
     .tip-box li { margin-bottom: 0.2rem; }
 
+    /* Polaroid Photo Frame Style for Spot Images */
+    .polaroid-photo {
+      margin-top: 0.75rem;
+      margin-bottom: 0.4rem;
+      background: #ffffff;
+      padding: 0.55rem 0.55rem 0.85rem 0.55rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(30, 42, 32, 0.12);
+      border: 1px solid rgba(30, 42, 32, 0.1);
+      max-width: 340px;
+      transform: rotate(-1deg);
+      transition: transform 0.22s ease;
+    }
+    .polaroid-photo:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+    .polaroid-photo img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+    .polaroid-photo .caption {
+      font-family: "Caveat", cursive;
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      text-align: center;
+      margin-top: 0.4rem;
+      font-weight: 600;
+    }
+
     /* route flow for D2 */
     .route-flow {
       display: flex;
@@ -2214,6 +2245,10 @@
           <div class="time">上午</div>
           <div class="place">神戶 · 麵包超人兒童博物館</div>
           <p class="desc">開館直入，全室內冷氣避暑，幼兒高放電效率公園。</p>
+          <div class="polaroid-photo">
+            <img src="img/anpanman.jpg" alt="神戶麵包超人兒童博物館" loading="lazy" />
+            <div class="caption">Kobe Anpanman Children's Museum</div>
+          </div>
           <div class="tag-row">
             <span class="tag ac">全室內</span>
             <span class="tag baby">高放電</span>
