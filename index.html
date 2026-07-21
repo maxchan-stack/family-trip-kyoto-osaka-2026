@@ -13,22 +13,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Klee+One:wght@400;600&family=Noto+Serif+TC:wght@400;600;700&family=Shippori+Mincho:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --paper: #ffffff;
-      --paper-deep: #f5f8f5;
-      --ink: #222a24;
-      --ink-soft: #4e5a52;
+      --paper: #f8faf7;
+      --paper-deep: #eef2ec;
+      --ink: #1e2620;
+      --ink-soft: #48544c;
       --vermilion: #c23b22;
       --gold: #c9a227;
       --gold-light: #f3e6b2;
       --sage: #5f7550;
       --water: #3f6173;
       --rust: #c45c3e;
-      --washi-line: rgba(34, 42, 36, 0.08);
+      --washi-line: rgba(30, 42, 32, 0.08);
       --stamp: #b83a2a;
-      --shadow: rgba(34, 42, 36, 0.08);
-      --shadow-sm: 0 4px 14px rgba(34, 42, 36, 0.05);
-      --shadow-md: 0 8px 24px rgba(34, 42, 36, 0.07);
-      --shadow-lg: 0 16px 40px rgba(34, 42, 36, 0.09);
+      --shadow: rgba(30, 42, 32, 0.08);
+      --shadow-sm: 0 4px 14px rgba(30, 42, 32, 0.05);
+      --shadow-md: 0 8px 24px rgba(30, 42, 32, 0.07);
+      --shadow-lg: 0 16px 40px rgba(30, 42, 32, 0.09);
       --text-sm: 0.88rem;
     }
 
@@ -39,10 +39,10 @@
     body {
       font-family: "Klee One", "Noto Serif TC", serif;
       color: var(--ink);
-      background-color: #f1f4f1;
+      background-color: #e3e8e2;
       background-image:
-        linear-gradient(rgba(40, 60, 48, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(40, 60, 48, 0.045) 1px, transparent 1px);
+        linear-gradient(rgba(35, 55, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 55, 42, 0.05) 1px, transparent 1px);
       background-size: 16px 16px;
       min-height: 100vh;
       line-height: 1.65;
@@ -79,7 +79,7 @@
     .cover {
       position: relative;
       background:
-        linear-gradient(180deg, #ffffff 0%, #f7f9f7 100%);
+        linear-gradient(180deg, #fbfcfb 0%, #f4f7f4 100%);
       border-radius: 4px 12px 6px 10px;
       padding: 2.75rem 2rem 2.5rem;
       box-shadow:
@@ -240,7 +240,7 @@
       top: max(0.4rem, env(safe-area-inset-top));
       z-index: 150;
       padding: 0.45rem 0.65rem;
-      background: rgba(232, 212, 181, 0.95);
+      background: rgba(227, 232, 226, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 999px;
@@ -306,56 +306,46 @@
       border-radius: 999px;
     }
 
-    /* Tab Panel Visibility & 3D Page Flip Transitions */
+    /* Tab Panel Visibility & Smooth Transition */
     .tab-panel {
       display: block;
       position: relative;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-      will-change: transform, opacity, filter;
+      will-change: transform, opacity;
     }
 
     .tab-panel:not(.is-active) {
       display: none !important;
     }
 
-    /* Page Flip Keyframe Animations */
-    @keyframes pageFlipForward {
+    /* Soft Slide & Fade Keyframe Animations */
+    @keyframes softSlideForward {
       0% {
-        opacity: 0.15;
-        transform: rotateY(-20deg) scale(0.96) translateX(14px);
-        transform-origin: left center;
-        filter: brightness(0.92);
+        opacity: 0;
+        transform: translateX(18px) scale(0.985);
       }
       100% {
         opacity: 1;
-        transform: rotateY(0deg) scale(1) translateX(0);
-        transform-origin: left center;
-        filter: brightness(1);
+        transform: translateX(0) scale(1);
       }
     }
 
-    @keyframes pageFlipBackward {
+    @keyframes softSlideBackward {
       0% {
-        opacity: 0.15;
-        transform: rotateY(20deg) scale(0.96) translateX(-14px);
-        transform-origin: right center;
-        filter: brightness(0.92);
+        opacity: 0;
+        transform: translateX(-18px) scale(0.985);
       }
       100% {
         opacity: 1;
-        transform: rotateY(0deg) scale(1) translateX(0);
-        transform-origin: right center;
-        filter: brightness(1);
+        transform: translateX(0) scale(1);
       }
     }
 
     .tab-panel.flip-forward {
-      animation: pageFlipForward 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: softSlideForward 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .tab-panel.flip-backward {
-      animation: pageFlipBackward 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: softSlideBackward 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     /* Assign day theme color variables for panel & cards */
