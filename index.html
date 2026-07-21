@@ -29,7 +29,7 @@
       --shadow-sm: 0 4px 14px rgba(34, 42, 36, 0.05);
       --shadow-md: 0 8px 24px rgba(34, 42, 36, 0.07);
       --shadow-lg: 0 16px 40px rgba(34, 42, 36, 0.09);
-      --text-sm: 0.8rem;
+      --text-sm: 0.88rem;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -258,13 +258,13 @@
       border: 1.5px solid transparent;
       color: var(--ink);
       font-family: "Klee One", "Noto Serif TC", serif;
-      font-size: 0.84rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      padding: 0.45rem 0.85rem;
+      padding: 0.5rem 0.9rem;
       border-radius: 999px;
       cursor: pointer;
       white-space: nowrap;
-      min-height: 38px;
+      min-height: 42px;
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
@@ -382,7 +382,7 @@
 
     .day-badge {
       font-family: "Caveat", cursive;
-      font-size: 1.55rem;
+      font-size: 1.7rem;
       font-weight: 700;
       color: var(--vermilion);
       line-height: 1;
@@ -396,23 +396,23 @@
 
     .day-title-block h2 {
       font-family: "Shippori Mincho", serif;
-      font-size: 1.28rem;
+      font-size: 1.42rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       line-height: 1.35;
     }
 
     .day-title-block .date {
-      font-size: 0.9rem;
+      font-size: 0.98rem;
       color: var(--ink-soft);
       margin-top: 0.15rem;
     }
 
     .day-theme {
       font-family: "Caveat", cursive;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       color: var(--ink-soft);
-      max-width: 220px;
+      max-width: 240px;
       text-align: right;
       line-height: 1.3;
     }
@@ -478,7 +478,7 @@
 
     .time {
       font-family: "Caveat", cursive;
-      font-size: 1.2rem;
+      font-size: 1.32rem;
       font-weight: 700;
       color: var(--vermilion);
       letter-spacing: 0.02em;
@@ -491,15 +491,16 @@
 
     .place {
       font-family: "Shippori Mincho", serif;
-      font-size: 1.08rem;
+      font-size: 1.18rem;
       font-weight: 700;
-      margin: 0.1rem 0 0.25rem;
+      margin: 0.12rem 0 0.3rem;
       letter-spacing: 0.03em;
     }
 
     .desc {
-      font-size: 0.92rem;
+      font-size: 1.02rem;
       color: var(--ink-soft);
+      line-height: 1.6;
     }
 
     .tag-row {
@@ -529,9 +530,9 @@
     /* callout boxes */
     .tip-box {
       margin-top: 1.15rem;
-      padding: 0.9rem 1rem;
-      background: rgba(255,255,255,0.55);
-      border: 2px solid rgba(42,34,24,0.12);
+      padding: 1.0rem 1.1rem;
+      background: rgba(255,255,255,0.75);
+      border: 1.5px solid rgba(34,42,36,0.14);
       border-radius: 8px;
       position: relative;
     }
@@ -543,23 +544,25 @@
 
     .tip-box .tip-label {
       font-family: "Caveat", cursive;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--vermilion);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
     }
 
     .tip-box.gold .tip-label { color: #9a7b1a; }
 
     .tip-box p {
-      font-size: 0.9rem;
+      font-size: 1.02rem;
       color: var(--ink-soft);
+      line-height: 1.58;
     }
 
     .tip-box ul {
       margin: 0.35rem 0 0 1.1rem;
-      font-size: 0.9rem;
+      font-size: 1.02rem;
       color: var(--ink-soft);
+      line-height: 1.58;
     }
 
     .tip-box li { margin-bottom: 0.2rem; }
@@ -666,9 +669,9 @@
 
     .map-sketch h3 {
       font-family: "Caveat", cursive;
-      font-size: 1.25rem;
+      font-size: 1.38rem;
       color: #9a7b1a;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
       text-align: center;
       cursor: pointer;
       user-select: none;
@@ -679,7 +682,7 @@
     }
 
     .map-sketch h3 .map-toggle-icon {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       transition: transform 0.22s ease;
       display: inline-block;
     }
@@ -703,31 +706,31 @@
 
     .map-sketch .map-sub {
       text-align: center;
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       color: var(--ink-soft);
-      margin-bottom: 0.75rem;
-      line-height: 1.45;
+      margin-bottom: 0.8rem;
+      line-height: 1.5;
     }
 
     .map-tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.45rem;
       justify-content: center;
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.75rem;
     }
 
     .map-tabs button {
       appearance: none;
       border: 1.5px solid rgba(154, 123, 26, 0.4);
-      background: rgba(255, 248, 235, 0.8);
+      background: rgba(255, 248, 235, 0.85);
       color: var(--ink-soft);
       font-family: "Klee One", serif;
-      font-size: 0.8rem;
-      padding: 0.4rem 0.75rem;
+      font-size: 0.9rem;
+      padding: 0.45rem 0.85rem;
       border-radius: 999px;
       cursor: pointer;
-      min-height: 36px;
+      min-height: 38px;
       -webkit-tap-highlight-color: rgba(194, 59, 34, 0.12);
     }
 
@@ -789,12 +792,12 @@
 
     .map-pin .pin-label {
       font-family: "Shippori Mincho", serif;
-      font-size: 0.88rem;
+      font-size: 1.02rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 0.35rem;
-      line-height: 1.3;
+      gap: 0.4rem;
+      line-height: 1.35;
     }
 
     .map-pin .pin-dot {
@@ -810,10 +813,10 @@
     .map-pin .pin-dot.sage { background: #6b7f5a; }
 
     .map-pin .pin-meta {
-      font-size: 0.75rem;
+      font-size: 0.86rem;
       color: var(--ink-soft);
-      margin-top: 0.2rem;
-      line-height: 1.4;
+      margin-top: 0.25rem;
+      line-height: 1.45;
       padding-left: 1rem;
     }
 
@@ -1475,9 +1478,9 @@
         top: max(0.35rem, env(safe-area-inset-top));
       }
       .day-nav .tab-btn {
-        font-size: 0.8rem;
-        padding: 0.45rem 0.75rem;
-        min-height: 38px;
+        font-size: 0.88rem;
+        padding: 0.5rem 0.85rem;
+        min-height: 40px;
       }
 
       /* Full-bleed left theme line indicator for mobile screens */
@@ -1512,13 +1515,13 @@
         margin-bottom: 0.9rem;
         padding-bottom: 0.75rem;
       }
-      .day-badge { font-size: 1.35rem; }
+      .day-badge { font-size: 1.5rem; }
       .day-title-block h2 {
-        font-size: 1.08rem;
+        font-size: 1.22rem;
         line-height: 1.4;
       }
-      .day-title-block .date { font-size: 0.84rem; }
-      .day-theme { font-size: 1rem; }
+      .day-title-block .date { font-size: 0.92rem; }
+      .day-theme { font-size: 1.1rem; }
 
       .timeline {
         padding-left: 1.1rem;
@@ -1529,22 +1532,22 @@
         padding-left: 0.65rem;
       }
       .slot.highlight {
-        padding: 0.7rem 0.7rem 0.7rem 0.8rem;
+        padding: 0.75rem 0.75rem 0.75rem 0.85rem;
       }
-      .time { font-size: 1.12rem; }
+      .time { font-size: 1.25rem; }
       .place {
-        font-size: 1rem;
-        line-height: 1.4;
+        font-size: 1.12rem;
+        line-height: 1.45;
       }
-      .desc { font-size: 0.88rem; line-height: 1.55; }
-      .tag { font-size: 0.7rem; padding: 0.18rem 0.5rem; }
+      .desc { font-size: 0.98rem; line-height: 1.6; }
+      .tag { font-size: 0.82rem; padding: 0.2rem 0.6rem; }
 
       .tip-box {
-        padding: 0.8rem 0.85rem;
+        padding: 0.9rem 0.95rem;
         margin-top: 1rem;
       }
-      .tip-box .tip-label { font-size: 1.05rem; }
-      .tip-box p, .tip-box ul { font-size: 0.86rem; }
+      .tip-box .tip-label { font-size: 1.18rem; }
+      .tip-box p, .tip-box ul { font-size: 0.96rem; }
 
       .map-sketch { padding: 0.7rem; }
       .map-frame {
